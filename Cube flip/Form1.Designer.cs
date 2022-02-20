@@ -88,7 +88,7 @@ namespace Cube_flip
 			this.gameField.Name = "gameField";
 			this.gameField.Size = new System.Drawing.Size(550, 550);
 			this.gameField.TabIndex = 1;
-			this.gameField.Paint += new System.Windows.Forms.PaintEventHandler(this.redrawGameField);
+			this.gameField.Paint += new System.Windows.Forms.PaintEventHandler(this.RedrawGameField);
 			// 
 			// buttonNewGame
 			// 
@@ -99,7 +99,7 @@ namespace Cube_flip
 			this.buttonNewGame.TabIndex = 3;
 			this.buttonNewGame.Text = "Новая игра";
 			this.buttonNewGame.UseVisualStyleBackColor = true;
-			this.buttonNewGame.Click += new System.EventHandler(this.buttonNewGameClick);
+			this.buttonNewGame.Click += new System.EventHandler(this.ButtonNewGameClick);
 			// 
 			// label1
 			// 
@@ -208,7 +208,7 @@ namespace Cube_flip
 			this.buttonFindSolutionWidth.TabIndex = 11;
 			this.buttonFindSolutionWidth.Text = "Найти решение";
 			this.buttonFindSolutionWidth.UseVisualStyleBackColor = true;
-			this.buttonFindSolutionWidth.Click += new System.EventHandler(this.buttonFindSolutionWidthClick);
+			this.buttonFindSolutionWidth.Click += new System.EventHandler(this.ButtonFindSolutionWidthClick);
 			// 
 			// groupBox1
 			// 
@@ -392,7 +392,7 @@ namespace Cube_flip
 			this.buttonSolutionDemoDepth.TabIndex = 12;
 			this.buttonSolutionDemoDepth.Text = "Демонстрация решения";
 			this.buttonSolutionDemoDepth.UseVisualStyleBackColor = true;
-			this.buttonSolutionDemoDepth.Click += new System.EventHandler(this.buttonSolutionDemoDepthClick);
+			this.buttonSolutionDemoDepth.Click += new System.EventHandler(this.ButtonSolutionDemoDepthClick);
 			// 
 			// textBox2
 			// 
@@ -412,7 +412,7 @@ namespace Cube_flip
 			this.buttonFindSolutionDepth.TabIndex = 11;
 			this.buttonFindSolutionDepth.Text = "Найти решение";
 			this.buttonFindSolutionDepth.UseVisualStyleBackColor = true;
-			this.buttonFindSolutionDepth.Click += new System.EventHandler(this.buttonFindSolutionDepthClick);
+			this.buttonFindSolutionDepth.Click += new System.EventHandler(this.ButtonFindSolutionDepthClick);
 			// 
 			// groupBox3
 			// 
@@ -434,7 +434,7 @@ namespace Cube_flip
 			this.buttonSolutionDemoWidth.TabIndex = 12;
 			this.buttonSolutionDemoWidth.Text = "Демонстрация решения";
 			this.buttonSolutionDemoWidth.UseVisualStyleBackColor = true;
-			this.buttonSolutionDemoWidth.Click += new System.EventHandler(this.buttonSolutionDemoWidthClick);
+			this.buttonSolutionDemoWidth.Click += new System.EventHandler(this.ButtonSolutionDemoWidthClick);
 			// 
 			// label5
 			// 
@@ -511,7 +511,7 @@ namespace Cube_flip
 			this.buttonShowmapExploredPassagesDepth.TabIndex = 18;
 			this.buttonShowmapExploredPassagesDepth.Text = "Показать карту исследованных ходов";
 			this.buttonShowmapExploredPassagesDepth.UseVisualStyleBackColor = true;
-			this.buttonShowmapExploredPassagesDepth.Click += new System.EventHandler(this.buttonShowmapExploredPassagesDepth_Click);
+			this.buttonShowmapExploredPassagesDepth.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesDepth_Click);
 			// 
 			// buttonShowmapExploredPassagesWidth
 			// 
@@ -521,7 +521,7 @@ namespace Cube_flip
 			this.buttonShowmapExploredPassagesWidth.TabIndex = 17;
 			this.buttonShowmapExploredPassagesWidth.Text = "Показать карту исследованных ходов";
 			this.buttonShowmapExploredPassagesWidth.UseVisualStyleBackColor = true;
-			this.buttonShowmapExploredPassagesWidth.Click += new System.EventHandler(this.buttonShowmapExploredPassagesWidth_Click);
+			this.buttonShowmapExploredPassagesWidth.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesWidth_Click);
 			// 
 			// label15
 			// 
@@ -551,7 +551,7 @@ namespace Cube_flip
 			this.collectionStatistics.TabIndex = 12;
 			this.collectionStatistics.Text = "Собрать статистику";
 			this.collectionStatistics.UseVisualStyleBackColor = true;
-			this.collectionStatistics.Click += new System.EventHandler(this.collectionStatisticsClick);
+			this.collectionStatistics.Click += new System.EventHandler(this.CollectionStatisticsClick);
 			// 
 			// textBox4
 			// 
