@@ -138,7 +138,6 @@ namespace Cube_flip
 			if (cellCounterY == fieldSize)
 				cellCounterY = 0;
 
-
 			Point pText = new Point(1, 0);
 			Font drawFont = new Font("Arial", 7);
 
