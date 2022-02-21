@@ -120,14 +120,13 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))
-				{
+				foreach (FieldCell p in Moves(temp))				
 					if (!CD.Contains(p) && !OD.Contains(p))
 					{
 						OD.Push(p);
 						fieldMapMoves[p.GetX, p.GetY]++;
 					}
-				}
+				
 
 				CD.Enqueue(temp);
 			}
@@ -147,8 +146,7 @@ namespace Cube_flip
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
 
-			if (x != 16)
-			{
+			if (x != 16)			
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
 					temporaryWay1 = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide))
@@ -157,10 +155,9 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay1);
 				}
-			}
+			
 
-			if (x != 0)
-			{
+			if (x != 0)			
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
 					temporaryWay2 = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide))
@@ -168,11 +165,9 @@ namespace Cube_flip
 						from = currentPosition
 					};
 					way.Enqueue(temporaryWay2);
-				}
-			}
+				}			
 
-			if (y != 16)
-			{
+			if (y != 16)			
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
 					temporaryWay3 = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide))
@@ -181,10 +176,8 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay3);
 				}
-			}
-
-			if (y != 0)
-			{
+			
+			if (y != 0)			
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
 					temporaryWay4 = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide))
@@ -193,7 +186,7 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay4);
 				}
-			}
+			
 
 			return way;
 		}
