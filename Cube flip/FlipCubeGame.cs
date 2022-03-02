@@ -28,6 +28,7 @@
 			right
 		}
 
+
 		public FlipCubeGame(int startPanelX, int startPanelY, int finishPanelX, int finishPanelY, DesiredColorSide currentDesiredColorSide)
 		{
 			this.startPanelX = startPanelX;
