@@ -20,7 +20,7 @@
 			back
 		}
 
-		public enum TurnDirection
+		public enum FlipDirection
 		{
 			up,
 			down,
@@ -82,11 +82,11 @@
 			set { currentDesiredColorSide = value; }
 		}
 
-		public void ChangeCurrentColor(TurnDirection receivedTurningSide)
+		public void ChangeCurrentColor(FlipDirection receivedTurningSide)
 		{
 			switch (receivedTurningSide)
 			{
-				case TurnDirection.left:
+				case FlipDirection.left:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -109,7 +109,7 @@
 							break;
 					}
 					break;
-				case TurnDirection.right:
+				case FlipDirection.right:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -132,7 +132,7 @@
 							break;
 					}
 					break;
-				case TurnDirection.up:
+				case FlipDirection.up:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -155,7 +155,7 @@
 							break;
 					}
 					break;
-				case TurnDirection.down:
+				case FlipDirection.down:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
