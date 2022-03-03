@@ -88,11 +88,9 @@ namespace Cube_flip
 				}
 
 				foreach (FieldCell p in Moves(temp))
-					if (!CD.Contains(p) && !OD.Contains(p))
-					{
+					if (!CD.Contains(p) && !OD.Contains(p))					
 						OD.Push(p);
-					}
-				
+									
 				CD.Enqueue(temp);
 			}
 
