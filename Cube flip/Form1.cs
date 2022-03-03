@@ -662,7 +662,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurningSide.left);
+						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurnDirection.left);
 
 						exitDemo = true;
 					}
@@ -679,7 +679,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurningSide.right);
+						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurnDirection.right);
 
 						exitDemo = true;
 					}
@@ -696,7 +696,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(TurningSide.down);
+						flipCubeGame.ChangeCurrentColor(TurnDirection.down);
 
 						exitDemo = true;
 					}
@@ -713,7 +713,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(TurningSide.up);
+						flipCubeGame.ChangeCurrentColor(TurnDirection.up);
 
 						exitDemo = true;
 					}

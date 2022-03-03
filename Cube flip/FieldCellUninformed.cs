@@ -2,8 +2,7 @@
 using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
-{
-	partial class UninformedSearch
+{	partial class UninformedSearch
 	{
 		class FieldCell : IEquatable<FieldCell>
 		{

@@ -111,7 +111,7 @@ namespace Cube_flip
 			if (x != 16)			
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(TurnDirection.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -122,7 +122,7 @@ namespace Cube_flip
 			if (x != 0)			
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(TurnDirection.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -132,7 +132,7 @@ namespace Cube_flip
 			if (y != 16)			
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(TurnDirection.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -142,7 +142,7 @@ namespace Cube_flip
 			if (y != 0)			
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurnDirection.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -382,11 +382,11 @@ namespace Cube_flip
 			return  fieldMapMoves;
 		}
 
-		private BoxSides ChangeCurrentSide(TurningSide receivedTurningSide, BoxSides currentDesiredColorSide)
+		private BoxSides ChangeCurrentSide(TurnDirection receivedTurningSide, BoxSides currentDesiredColorSide)
 		{
 			switch (receivedTurningSide)
 			{
-				case TurningSide.left:
+				case TurnDirection.left:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -403,7 +403,7 @@ namespace Cube_flip
 							return BoxSides.back;
 					}
 					break;
-				case TurningSide.right:
+				case TurnDirection.right:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -420,7 +420,7 @@ namespace Cube_flip
 							return BoxSides.back;
 					}
 					break;
-				case TurningSide.up:
+				case TurnDirection.up:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -437,7 +437,7 @@ namespace Cube_flip
 							return BoxSides.top;
 					}
 					break;
-				case TurningSide.down:
+				case TurnDirection.down:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:

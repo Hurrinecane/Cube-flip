@@ -9,7 +9,8 @@
 		private int finishPanelX;
 		private int finishPanelY;
 		private BoxSides currentDesiredColorSide;
-				public enum BoxSides
+
+		public enum BoxSides
 		{
 			top,
 			bottom,
@@ -19,7 +20,7 @@
 			back
 		}
 
-		public enum TurningSide
+		public enum TurnDirection
 		{
 			up,
 			down,
@@ -81,11 +82,11 @@
 			set { currentDesiredColorSide = value; }
 		}
 
-		public void ChangeCurrentColor(TurningSide receivedTurningSide)
+		public void ChangeCurrentColor(TurnDirection receivedTurningSide)
 		{
 			switch (receivedTurningSide)
 			{
-				case TurningSide.left:
+				case TurnDirection.left:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -108,7 +109,7 @@
 							break;
 					}
 					break;
-				case TurningSide.right:
+				case TurnDirection.right:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -131,7 +132,7 @@
 							break;
 					}
 					break;
-				case TurningSide.up:
+				case TurnDirection.up:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
@@ -154,7 +155,7 @@
 							break;
 					}
 					break;
-				case TurningSide.down:
+				case TurnDirection.down:
 					switch (currentDesiredColorSide)
 					{
 						case BoxSides.top:
