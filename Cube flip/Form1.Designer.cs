@@ -668,7 +668,7 @@ namespace Cube_flip
 			// 
 			this.label18.AutoSize = true;
 			this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label18.Location = new System.Drawing.Point(691, 35);
+			this.label18.Location = new System.Drawing.Point(691, 31);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(114, 24);
 			this.label18.TabIndex = 16;
@@ -678,7 +678,7 @@ namespace Cube_flip
 			// 
 			this.label19.AutoSize = true;
 			this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label19.Location = new System.Drawing.Point(299, 38);
+			this.label19.Location = new System.Drawing.Point(299, 31);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(114, 24);
 			this.label19.TabIndex = 15;

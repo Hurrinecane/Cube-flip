@@ -10,11 +10,11 @@ namespace Cube_flip
 			private int X;
 			private int Y;
 
-			private int g;
-			private int h;
-
 			private BoxSides Side;
 			public FieldCell from = null;
+
+			private int g;
+			private int h;
 
 			public FieldCell(int currentPanelX, int currentPanelY, BoxSides currentDesiredSide)
 			{

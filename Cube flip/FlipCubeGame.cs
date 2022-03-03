@@ -8,7 +8,7 @@
 		private int startPanelY;
 		private int finishPanelX;
 		private int finishPanelY;
-		private BoxSides currentDesiredColorSide;
+		private BoxSides winSide;
 
 		public enum BoxSides
 		{
@@ -20,7 +20,7 @@
 			back
 		}
 
-		public enum TurnDirection
+		public enum FlipDirection
 		{
 			up,
 			down,
@@ -35,7 +35,7 @@
 			this.startPanelY = startPanelY;
 			this.finishPanelX = finishPanelX;
 			this.finishPanelY = finishPanelY;
-			this.currentDesiredColorSide = currentDesiredColorSide;
+			this.winSide = currentDesiredColorSide;
 			currentPanelX = startPanelX;
 			currentPanelY = startPanelY;
 		}
@@ -78,103 +78,103 @@
 
 		public BoxSides ColoredSide
 		{
-			get { return currentDesiredColorSide; }
-			set { currentDesiredColorSide = value; }
+			get { return winSide; }
+			set { winSide = value; }
 		}
 
-		public void ChangeCurrentColor(TurnDirection receivedTurningSide)
+		public void ChangeCurrentColor(FlipDirection receivedTurningSide)
 		{
 			switch (receivedTurningSide)
 			{
-				case TurnDirection.left:
-					switch (currentDesiredColorSide)
+				case FlipDirection.left:
+					switch (winSide)
 					{
 						case BoxSides.top:
-							currentDesiredColorSide = BoxSides.left;
+							winSide = BoxSides.left;
 							break;
 						case BoxSides.left:
-							currentDesiredColorSide = BoxSides.bottom;
+							winSide = BoxSides.bottom;
 							break;
 						case BoxSides.right:
-							currentDesiredColorSide = BoxSides.top;
+							winSide = BoxSides.top;
 							break;
 						case BoxSides.bottom:
-							currentDesiredColorSide = BoxSides.right;
+							winSide = BoxSides.right;
 							break;
 						case BoxSides.front:
-							currentDesiredColorSide = BoxSides.front;
+							winSide = BoxSides.front;
 							break;
 						case BoxSides.back:
-							currentDesiredColorSide = BoxSides.back;
+							winSide = BoxSides.back;
 							break;
 					}
 					break;
-				case TurnDirection.right:
-					switch (currentDesiredColorSide)
+				case FlipDirection.right:
+					switch (winSide)
 					{
 						case BoxSides.top:
-							currentDesiredColorSide = BoxSides.right;
+							winSide = BoxSides.right;
 							break;
 						case BoxSides.left:
-							currentDesiredColorSide = BoxSides.top;
+							winSide = BoxSides.top;
 							break;
 						case BoxSides.right:
-							currentDesiredColorSide = BoxSides.bottom;
+							winSide = BoxSides.bottom;
 							break;
 						case BoxSides.bottom:
-							currentDesiredColorSide = BoxSides.left;
+							winSide = BoxSides.left;
 							break;
 						case BoxSides.front:
-							currentDesiredColorSide = BoxSides.front;
+							winSide = BoxSides.front;
 							break;
 						case BoxSides.back:
-							currentDesiredColorSide = BoxSides.back;
+							winSide = BoxSides.back;
 							break;
 					}
 					break;
-				case TurnDirection.up:
-					switch (currentDesiredColorSide)
+				case FlipDirection.up:
+					switch (winSide)
 					{
 						case BoxSides.top:
-							currentDesiredColorSide = BoxSides.front;
+							winSide = BoxSides.front;
 							break;
 						case BoxSides.left:
-							currentDesiredColorSide = BoxSides.left;
+							winSide = BoxSides.left;
 							break;
 						case BoxSides.right:
-							currentDesiredColorSide = BoxSides.right;
+							winSide = BoxSides.right;
 							break;
 						case BoxSides.bottom:
-							currentDesiredColorSide = BoxSides.back;
+							winSide = BoxSides.back;
 							break;
 						case BoxSides.front:
-							currentDesiredColorSide = BoxSides.bottom;
+							winSide = BoxSides.bottom;
 							break;
 						case BoxSides.back:
-							currentDesiredColorSide = BoxSides.top;
+							winSide = BoxSides.top;
 							break;
 					}
 					break;
-				case TurnDirection.down:
-					switch (currentDesiredColorSide)
+				case FlipDirection.down:
+					switch (winSide)
 					{
 						case BoxSides.top:
-							currentDesiredColorSide = BoxSides.back;
+							winSide = BoxSides.back;
 							break;
 						case BoxSides.left:
-							currentDesiredColorSide = BoxSides.left;
+							winSide = BoxSides.left;
 							break;
 						case BoxSides.right:
-							currentDesiredColorSide = BoxSides.right;
+							winSide = BoxSides.right;
 							break;
 						case BoxSides.bottom:
-							currentDesiredColorSide = BoxSides.front;
+							winSide = BoxSides.front;
 							break;
 						case BoxSides.front:
-							currentDesiredColorSide = BoxSides.top;
+							winSide = BoxSides.top;
 							break;
 						case BoxSides.back:
-							currentDesiredColorSide = BoxSides.bottom;
+							winSide = BoxSides.bottom;
 							break;
 					}
 					break;
