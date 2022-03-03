@@ -220,7 +220,7 @@ namespace Cube_flip
 			this.domainUpDownSideRedFace.Text = "top";
 			this.domainUpDownSideRedFace.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.domainUpDownSideRedFace.Wrap = true;
-			this.domainUpDownSideRedFace.SelectedItemChanged += new System.EventHandler(this.domainUpDownSideRedFace_SelectedItemChanged);
+			this.domainUpDownSideRedFace.SelectedItemChanged += new System.EventHandler(this.DomainUpDownSideRedFace_SelectedItemChanged);
 			// 
 			// textBox1
 			// 

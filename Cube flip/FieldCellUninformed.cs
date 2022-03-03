@@ -1,10 +1,11 @@
 ﻿using System;
+using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
 	partial class UninformedSearch
 	{
-		private class FieldCell : IEquatable<FieldCell>
+		class FieldCell : IEquatable<FieldCell>
 		{
 			private int X;
 			private int Y;

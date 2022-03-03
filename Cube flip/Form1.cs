@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
@@ -46,7 +47,7 @@ namespace Cube_flip
 											(int)numericUpDownStartPositionY.Value,
 											(int)numericUpDownEndPositionX.Value,
 											(int)numericUpDownEndPositionY.Value,
-											FlipCubeGame.BoxSides.top);
+											BoxSides.top);
 
 			ResetGameField();
 		}
@@ -169,29 +170,29 @@ namespace Cube_flip
 
 		private void CubeRenderingPanel(object sender, PaintEventArgs e)
 		{
-			switch (flipCubeGame.CurrentDesiredColorSide)
+			switch (flipCubeGame.ColoredSide)
 			{
-				case FlipCubeGame.BoxSides.top:
+				case BoxSides.top:
 					e.Graphics.FillRectangle(Brushes.Red, 0, 0, 28, 28);
 					break;
 
-				case FlipCubeGame.BoxSides.bottom:
+				case BoxSides.bottom:
 					break;
 
-				case FlipCubeGame.BoxSides.left:
+				case BoxSides.left:
 					e.Graphics.FillRectangle(Brushes.Red, 0, 0, 3, 28);
 					break;
 
-				case FlipCubeGame.BoxSides.right:
+				case BoxSides.right:
 					e.Graphics.FillRectangle(Brushes.Red, 25, 0, 3, 28);
 					break;
 
-				case FlipCubeGame.BoxSides.front:
-					e.Graphics.FillRectangle(Brushes.Red, 0, 25, 28, 3);
+				case BoxSides.front:
+					e.Graphics.FillRectangle(Brushes.Red, 0, 0, 28, 3);
 					break;
 
-				case FlipCubeGame.BoxSides.back:
-					e.Graphics.FillRectangle(Brushes.Red, 0, 0, 28, 3);
+				case BoxSides.back:
+					e.Graphics.FillRectangle(Brushes.Red, 0, 25, 28, 3);
 					break;
 			}
 		}
@@ -202,29 +203,7 @@ namespace Cube_flip
 
 		private void ButtonFindSolutionWidthClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -242,36 +221,14 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayWidth();
 			textBox1.Text = artificialIntelligenceSystem.PathOutput();
 		}
 
 		async private void ButtonSolutionDemoWidthClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -287,12 +244,12 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayWidth();
 			textBox1.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();
-			Queue<UninformedSearch.BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
+			Queue<BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
 
 			if (pathPanel.Count == 0)
 				return;
@@ -308,7 +265,7 @@ namespace Cube_flip
 				int x = pathPanel.Dequeue();
 				int y = pathPanel.Dequeue();
 
-				flipCubeGame.CurrentDesiredColorSide = (FlipCubeGame.BoxSides)ColorSide.Dequeue();
+				flipCubeGame.ColoredSide = (BoxSides)ColorSide.Dequeue();
 
 				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
@@ -324,29 +281,7 @@ namespace Cube_flip
 
 		private void ButtonShowmapExploredPassagesWidth_Click(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -361,7 +296,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesWidth();
 
 			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY);
@@ -374,29 +309,7 @@ namespace Cube_flip
 
 		private void ButtonFindSolutionDepthClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -416,36 +329,14 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayDepth();
 			textBox2.Text = artificialIntelligenceSystem.PathOutput();
 		}
 
 		async private void ButtonSolutionDemoDepthClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -461,12 +352,12 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayDepth();
 			textBox2.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();
-			Queue<UninformedSearch.BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
+			Queue<BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
 
 			if (pathPanel.Count == 0)
 				return;
@@ -482,7 +373,7 @@ namespace Cube_flip
 				int x = pathPanel.Dequeue();
 				int y = pathPanel.Dequeue();
 
-				flipCubeGame.CurrentDesiredColorSide = (FlipCubeGame.BoxSides)ColorSide.Dequeue();
+				flipCubeGame.ColoredSide = ColorSide.Dequeue();
 
 				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
@@ -501,29 +392,7 @@ namespace Cube_flip
 
 		private void ButtonShowmapExploredPassagesDepthClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -543,7 +412,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesDepth();
 
 			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY);
@@ -556,29 +425,7 @@ namespace Cube_flip
 
 		private void ButtonAlgorithm1Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -594,36 +441,14 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 		}
 
 		async private void ButtonSolutionDemoAlgorithm1Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -638,12 +463,12 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();
-			Queue<InformedSearch.BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
+			Queue<BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
 
 			if (pathPanel.Count == 0)
 				return;
@@ -659,7 +484,7 @@ namespace Cube_flip
 				int x = pathPanel.Dequeue();
 				int y = pathPanel.Dequeue();
 
-				flipCubeGame.CurrentDesiredColorSide = (FlipCubeGame.BoxSides)ColorSide.Dequeue();
+				flipCubeGame.ColoredSide = (BoxSides)ColorSide.Dequeue();
 
 				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
@@ -675,30 +500,7 @@ namespace Cube_flip
 
 		private void ButtonShowmapExploredPassagesAlgorithm1Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
-
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -718,7 +520,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesAlgorithm1();
 			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationAlgorithm1();
 
@@ -732,29 +534,7 @@ namespace Cube_flip
 
 		private void ButtonAlgorithm2Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -772,36 +552,14 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 		}
 
 		async private void ButtonSolutionDemoAlgorithm2Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -817,12 +575,12 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();
-			Queue<InformedSearch.BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
+			Queue<BoxSides> ColorSide = artificialIntelligenceSystem.GetWayColorSide();
 
 			if (pathPanel.Count == 0)
 				return;
@@ -838,7 +596,7 @@ namespace Cube_flip
 				int x = pathPanel.Dequeue();
 				int y = pathPanel.Dequeue();
 
-				flipCubeGame.CurrentDesiredColorSide = (FlipCubeGame.BoxSides)ColorSide.Dequeue();
+				flipCubeGame.ColoredSide = ColorSide.Dequeue();
 
 				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
@@ -854,29 +612,7 @@ namespace Cube_flip
 
 		private void ButtonShowmapExploredPassagesAlgorithm2Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -896,7 +632,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesAlgorithm2();
 			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationAlgorithm2();
 
@@ -960,7 +696,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurningSide.bottom);
+						flipCubeGame.ChangeCurrentColor(TurningSide.down);
 
 						exitDemo = true;
 					}
@@ -977,7 +713,7 @@ namespace Cube_flip
 						field[currentX, currentY] = 4;
 						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 
-						flipCubeGame.ChangeCurrentColor(FlipCubeGame.TurningSide.top);
+						flipCubeGame.ChangeCurrentColor(TurningSide.up);
 
 						exitDemo = true;
 					}
@@ -994,7 +730,7 @@ namespace Cube_flip
 
 			if (flipCubeGame.СurrentPanelX == flipCubeGame.FinishPanelX
 				&& flipCubeGame.СurrentPanelY == flipCubeGame.FinishPanelY
-				&& FlipCubeGame.BoxSides.bottom == flipCubeGame.CurrentDesiredColorSide)
+				&& BoxSides.bottom == flipCubeGame.ColoredSide)
 			{
 				MessageBox.Show("Победа", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				ResetAll();
@@ -1045,22 +781,22 @@ namespace Cube_flip
 							switch (domainUpDownSideRedFace.Text)
 							{
 								case "top":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.top;
+									flipCubeGame.ColoredSide = BoxSides.top;
 									break;
 								case "bottom":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.bottom;
+									flipCubeGame.ColoredSide = BoxSides.bottom;
 									break;
 								case "left":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.left;
+									flipCubeGame.ColoredSide = BoxSides.left;
 									break;
 								case "right":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.right;
+									flipCubeGame.ColoredSide = BoxSides.right;
 									break;
 								case "front":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.front;
+									flipCubeGame.ColoredSide = BoxSides.front;
 									break;
 								case "back":
-									flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.back;
+									flipCubeGame.ColoredSide = BoxSides.back;
 									break;
 
 							}
@@ -1095,29 +831,7 @@ namespace Cube_flip
 
 		private void CollectionStatisticsClick(object sender, EventArgs e)
 		{
-			UninformedSearch.BoxSides current = UninformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = UninformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = UninformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = UninformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = UninformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = UninformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = UninformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -1132,36 +846,14 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, UninformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			textBox3.Text = artificialIntelligenceSystem.GetStatisticsWidth();
 			textBox4.Text = artificialIntelligenceSystem.GetStatisticsDepth();
 		}
 
 		private void CollectionStatistics2Click(object sender, EventArgs e)
 		{
-			InformedSearch.BoxSides current = InformedSearch.BoxSides.top;
-
-			switch (flipCubeGame.CurrentDesiredColorSide)
-			{
-				case FlipCubeGame.BoxSides.top:
-					current = InformedSearch.BoxSides.top;
-					break;
-				case FlipCubeGame.BoxSides.bottom:
-					current = InformedSearch.BoxSides.bottom;
-					break;
-				case FlipCubeGame.BoxSides.right:
-					current = InformedSearch.BoxSides.right;
-					break;
-				case FlipCubeGame.BoxSides.left:
-					current = InformedSearch.BoxSides.left;
-					break;
-				case FlipCubeGame.BoxSides.back:
-					current = InformedSearch.BoxSides.back;
-					break;
-				case FlipCubeGame.BoxSides.front:
-					current = InformedSearch.BoxSides.front;
-					break;
-			}
+			BoxSides current = flipCubeGame.ColoredSide;
 
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
@@ -1176,7 +868,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
 			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, InformedSearch.BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
 			textBox8.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm1();
 			textBox7.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm2();
 		}
@@ -1232,22 +924,22 @@ namespace Cube_flip
 			switch (domainUpDownSideRedFace.Text)
 			{
 				case "top":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.top;
+					flipCubeGame.ColoredSide = BoxSides.top;
 					break;
 				case "bottom":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.bottom;
+					flipCubeGame.ColoredSide = BoxSides.bottom;
 					break;
 				case "left":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.left;
+					flipCubeGame.ColoredSide = BoxSides.left;
 					break;
 				case "right":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.right;
+					flipCubeGame.ColoredSide = BoxSides.right;
 					break;
 				case "front":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.front;
+					flipCubeGame.ColoredSide = BoxSides.front;
 					break;
 				case "back":
-					flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.back;
+					flipCubeGame.ColoredSide = BoxSides.back;
 					break;
 			}
 
@@ -1275,7 +967,7 @@ namespace Cube_flip
 				flipCubeGame.StartPanelY = 8;
 				numericUpDownStartPositionX.Value = 15;
 				numericUpDownStartPositionY.Value = 8;
-				flipCubeGame.CurrentDesiredColorSide = FlipCubeGame.BoxSides.top;
+				flipCubeGame.ColoredSide = BoxSides.top;
 			}
 
 			ReadArrayFromFile();
@@ -1322,7 +1014,7 @@ namespace Cube_flip
 			ResetAll();
 		}
 
-		private void domainUpDownSideRedFace_SelectedItemChanged(object sender, EventArgs e)
+		private void DomainUpDownSideRedFace_SelectedItemChanged(object sender, EventArgs e)
 		{
 			ResetAll();
 		}

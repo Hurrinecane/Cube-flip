@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
@@ -20,24 +21,6 @@ namespace Cube_flip
 		List<int[,]> fieldMapMoves;
 
 		private bool noExit = true;
-
-		public enum BoxSides
-		{
-			left,
-			right,
-			top,
-			bottom,
-			front,
-			back
-		}
-
-		public enum TurningSide
-		{
-			up,
-			down,
-			left,
-			right
-		}
 
 		public UninformedSearch(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
 		{
