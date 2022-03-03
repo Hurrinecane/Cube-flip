@@ -52,8 +52,10 @@
     <Compile Include="AlgorithmMoveMap.Designer.cs">
       <DependentUpon>AlgorithmMoveMap.cs</DependentUpon>
     </Compile>
-    <Compile Include="ArtificialIntelligenceSystem.cs" />
-    <Compile Include="FieldCell.cs" />
+    <Compile Include="FieldCellInformed.cs" />
+    <Compile Include="InformedSearch.cs" />
+    <Compile Include="UninformedSearch.cs" />
+    <Compile Include="FieldCellUninformed.cs" />
     <Compile Include="FlipCubeGame.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -40,6 +40,7 @@ namespace Cube_flip
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.buttonFindSolutionWidth = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.domainUpDownLevelSelection = new System.Windows.Forms.DomainUpDown();
 			this.label13 = new System.Windows.Forms.Label();
 			this.numericUpDownEndPositionY = new System.Windows.Forms.NumericUpDown();
 			this.label12 = new System.Windows.Forms.Label();
@@ -68,6 +69,30 @@ namespace Cube_flip
 			this.collectionStatistics = new System.Windows.Forms.Button();
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.buttonShowmapExploredPassagesAlgorithm2 = new System.Windows.Forms.Button();
+			this.buttonShowmapExploredPassagesAlgorithm1 = new System.Windows.Forms.Button();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.collectionStatistics2 = new System.Windows.Forms.Button();
+			this.textBox7 = new System.Windows.Forms.TextBox();
+			this.textBox8 = new System.Windows.Forms.TextBox();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.buttonSolutionDemoAlgorithm2 = new System.Windows.Forms.Button();
+			this.textBox5 = new System.Windows.Forms.TextBox();
+			this.buttonAlgorithm2 = new System.Windows.Forms.Button();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.buttonSolutionDemoAlgorithm1 = new System.Windows.Forms.Button();
+			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.buttonAlgorithm1 = new System.Windows.Forms.Button();
+			this.label16 = new System.Windows.Forms.Label();
+			this.numericUpDownTime2 = new System.Windows.Forms.NumericUpDown();
+			this.label17 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartPositionX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownEndPositionX)).BeginInit();
 			this.groupBox1.SuspendLayout();
@@ -78,13 +103,19 @@ namespace Cube_flip
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTime)).BeginInit();
 			this.groupBox5.SuspendLayout();
+			this.groupBox9.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.groupBox7.SuspendLayout();
+			this.groupBox8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTime2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// gameField
 			// 
 			this.gameField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gameField.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.gameField.Location = new System.Drawing.Point(12, 12);
+			this.gameField.Location = new System.Drawing.Point(12, 29);
 			this.gameField.Name = "gameField";
 			this.gameField.Size = new System.Drawing.Size(550, 550);
 			this.gameField.TabIndex = 1;
@@ -95,7 +126,7 @@ namespace Cube_flip
 			this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.buttonNewGame.Location = new System.Drawing.Point(6, 28);
 			this.buttonNewGame.Name = "buttonNewGame";
-			this.buttonNewGame.Size = new System.Drawing.Size(534, 32);
+			this.buttonNewGame.Size = new System.Drawing.Size(338, 32);
 			this.buttonNewGame.TabIndex = 3;
 			this.buttonNewGame.Text = "Новая игра";
 			this.buttonNewGame.UseVisualStyleBackColor = true;
@@ -175,12 +206,12 @@ namespace Cube_flip
 			// 
 			this.domainUpDownSideRedFace.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.domainUpDownSideRedFace.InterceptArrowKeys = false;
-			this.domainUpDownSideRedFace.Items.Add("left");
-			this.domainUpDownSideRedFace.Items.Add("bottom");
-			this.domainUpDownSideRedFace.Items.Add("top");
 			this.domainUpDownSideRedFace.Items.Add("right");
-			this.domainUpDownSideRedFace.Items.Add("straight");
-			this.domainUpDownSideRedFace.Items.Add("behind");
+			this.domainUpDownSideRedFace.Items.Add("left");
+			this.domainUpDownSideRedFace.Items.Add("top");
+			this.domainUpDownSideRedFace.Items.Add("bottom");
+			this.domainUpDownSideRedFace.Items.Add("front");
+			this.domainUpDownSideRedFace.Items.Add("back");
 			this.domainUpDownSideRedFace.Location = new System.Drawing.Point(193, 133);
 			this.domainUpDownSideRedFace.Name = "domainUpDownSideRedFace";
 			this.domainUpDownSideRedFace.ReadOnly = true;
@@ -189,6 +220,7 @@ namespace Cube_flip
 			this.domainUpDownSideRedFace.Text = "top";
 			this.domainUpDownSideRedFace.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.domainUpDownSideRedFace.Wrap = true;
+			this.domainUpDownSideRedFace.SelectedItemChanged += new System.EventHandler(this.domainUpDownSideRedFace_SelectedItemChanged);
 			// 
 			// textBox1
 			// 
@@ -212,6 +244,7 @@ namespace Cube_flip
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.domainUpDownLevelSelection);
 			this.groupBox1.Controls.Add(this.label13);
 			this.groupBox1.Controls.Add(this.numericUpDownEndPositionY);
 			this.groupBox1.Controls.Add(this.label12);
@@ -230,12 +263,32 @@ namespace Cube_flip
 			this.groupBox1.Controls.Add(this.numericUpDownStartPositionX);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.groupBox1.Location = new System.Drawing.Point(572, 12);
+			this.groupBox1.Location = new System.Drawing.Point(572, 29);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(546, 168);
 			this.groupBox1.TabIndex = 12;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Настройки игры";
+			// 
+			// domainUpDownLevelSelection
+			// 
+			this.domainUpDownLevelSelection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.domainUpDownLevelSelection.InterceptArrowKeys = false;
+			this.domainUpDownLevelSelection.Items.Add("Level 6");
+			this.domainUpDownLevelSelection.Items.Add("Level 5");
+			this.domainUpDownLevelSelection.Items.Add("Level 4");
+			this.domainUpDownLevelSelection.Items.Add("Level 3");
+			this.domainUpDownLevelSelection.Items.Add("Level 2");
+			this.domainUpDownLevelSelection.Items.Add("Level 1");
+			this.domainUpDownLevelSelection.Location = new System.Drawing.Point(350, 30);
+			this.domainUpDownLevelSelection.Name = "domainUpDownLevelSelection";
+			this.domainUpDownLevelSelection.ReadOnly = true;
+			this.domainUpDownLevelSelection.Size = new System.Drawing.Size(188, 29);
+			this.domainUpDownLevelSelection.TabIndex = 20;
+			this.domainUpDownLevelSelection.Text = "Level 1";
+			this.domainUpDownLevelSelection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.domainUpDownLevelSelection.Wrap = true;
+			this.domainUpDownLevelSelection.SelectedItemChanged += new System.EventHandler(this.DomainUpDownLevelSelectionSelectedItemChanged);
 			// 
 			// label13
 			// 
@@ -365,7 +418,7 @@ namespace Cube_flip
 			this.groupBox2.Controls.Add(this.numericUpDownTime);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.groupBox2.Location = new System.Drawing.Point(572, 186);
+			this.groupBox2.Location = new System.Drawing.Point(572, 203);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(546, 376);
 			this.groupBox2.TabIndex = 13;
@@ -496,7 +549,7 @@ namespace Cube_flip
 			this.groupBox5.Controls.Add(this.textBox4);
 			this.groupBox5.Controls.Add(this.textBox3);
 			this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.groupBox5.Location = new System.Drawing.Point(12, 568);
+			this.groupBox5.Location = new System.Drawing.Point(12, 585);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(1106, 222);
 			this.groupBox5.TabIndex = 0;
@@ -511,7 +564,7 @@ namespace Cube_flip
 			this.buttonShowmapExploredPassagesDepth.TabIndex = 18;
 			this.buttonShowmapExploredPassagesDepth.Text = "Показать карту исследованных ходов";
 			this.buttonShowmapExploredPassagesDepth.UseVisualStyleBackColor = true;
-			this.buttonShowmapExploredPassagesDepth.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesDepth_Click);
+			this.buttonShowmapExploredPassagesDepth.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesDepthClick);
 			// 
 			// buttonShowmapExploredPassagesWidth
 			// 
@@ -573,18 +626,295 @@ namespace Cube_flip
 			this.textBox3.Size = new System.Drawing.Size(545, 110);
 			this.textBox3.TabIndex = 13;
 			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.buttonShowmapExploredPassagesAlgorithm2);
+			this.groupBox9.Controls.Add(this.buttonShowmapExploredPassagesAlgorithm1);
+			this.groupBox9.Controls.Add(this.label18);
+			this.groupBox9.Controls.Add(this.label19);
+			this.groupBox9.Controls.Add(this.collectionStatistics2);
+			this.groupBox9.Controls.Add(this.textBox7);
+			this.groupBox9.Controls.Add(this.textBox8);
+			this.groupBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.groupBox9.Location = new System.Drawing.Point(12, 585);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(1106, 222);
+			this.groupBox9.TabIndex = 19;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Статистика";
+			this.groupBox9.Visible = false;
+			// 
+			// buttonShowmapExploredPassagesAlgorithm2
+			// 
+			this.buttonShowmapExploredPassagesAlgorithm2.Location = new System.Drawing.Point(553, 181);
+			this.buttonShowmapExploredPassagesAlgorithm2.Name = "buttonShowmapExploredPassagesAlgorithm2";
+			this.buttonShowmapExploredPassagesAlgorithm2.Size = new System.Drawing.Size(545, 30);
+			this.buttonShowmapExploredPassagesAlgorithm2.TabIndex = 18;
+			this.buttonShowmapExploredPassagesAlgorithm2.Text = "Показать карту исследованных ходов";
+			this.buttonShowmapExploredPassagesAlgorithm2.UseVisualStyleBackColor = true;
+			this.buttonShowmapExploredPassagesAlgorithm2.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesAlgorithm2Click);
+			// 
+			// buttonShowmapExploredPassagesAlgorithm1
+			// 
+			this.buttonShowmapExploredPassagesAlgorithm1.Location = new System.Drawing.Point(6, 181);
+			this.buttonShowmapExploredPassagesAlgorithm1.Name = "buttonShowmapExploredPassagesAlgorithm1";
+			this.buttonShowmapExploredPassagesAlgorithm1.Size = new System.Drawing.Size(545, 30);
+			this.buttonShowmapExploredPassagesAlgorithm1.TabIndex = 17;
+			this.buttonShowmapExploredPassagesAlgorithm1.Text = "Показать карту исследованных ходов";
+			this.buttonShowmapExploredPassagesAlgorithm1.UseVisualStyleBackColor = true;
+			this.buttonShowmapExploredPassagesAlgorithm1.Click += new System.EventHandler(this.ButtonShowmapExploredPassagesAlgorithm1Click);
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label18.Location = new System.Drawing.Point(691, 35);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(114, 24);
+			this.label18.TabIndex = 16;
+			this.label18.Text = "Алгоритм-2";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label19.Location = new System.Drawing.Point(299, 38);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(114, 24);
+			this.label19.TabIndex = 15;
+			this.label19.Text = "Алгоритм-1";
+			// 
+			// collectionStatistics2
+			// 
+			this.collectionStatistics2.Location = new System.Drawing.Point(419, 28);
+			this.collectionStatistics2.Name = "collectionStatistics2";
+			this.collectionStatistics2.Size = new System.Drawing.Size(266, 31);
+			this.collectionStatistics2.TabIndex = 12;
+			this.collectionStatistics2.Text = "Собрать статистику";
+			this.collectionStatistics2.UseVisualStyleBackColor = true;
+			this.collectionStatistics2.Click += new System.EventHandler(this.CollectionStatistics2Click);
+			// 
+			// textBox7
+			// 
+			this.textBox7.Location = new System.Drawing.Point(553, 65);
+			this.textBox7.Multiline = true;
+			this.textBox7.Name = "textBox7";
+			this.textBox7.ReadOnly = true;
+			this.textBox7.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBox7.Size = new System.Drawing.Size(545, 110);
+			this.textBox7.TabIndex = 14;
+			// 
+			// textBox8
+			// 
+			this.textBox8.Location = new System.Drawing.Point(6, 65);
+			this.textBox8.Multiline = true;
+			this.textBox8.Name = "textBox8";
+			this.textBox8.ReadOnly = true;
+			this.textBox8.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBox8.Size = new System.Drawing.Size(545, 110);
+			this.textBox8.TabIndex = 13;
+			// 
+			// menuStrip
+			// 
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(1122, 24);
+			this.menuStrip.TabIndex = 14;
+			this.menuStrip.Text = "Меню";
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
+			this.toolStripMenuItem1.Text = "Меню";
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Checked = true;
+			this.toolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(276, 22);
+			this.toolStripMenuItem2.Text = "Неинформированный метод поиска";
+			this.toolStripMenuItem2.Click += new System.EventHandler(this.MenuItemUninformativeSearchClick);
+			// 
+			// toolStripMenuItem3
+			// 
+			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(276, 22);
+			this.toolStripMenuItem3.Text = "Информированный метод поиска";
+			this.toolStripMenuItem3.Click += new System.EventHandler(this.MenuItemInformativeSearchClick);
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.groupBox7);
+			this.groupBox6.Controls.Add(this.groupBox8);
+			this.groupBox6.Controls.Add(this.label16);
+			this.groupBox6.Controls.Add(this.numericUpDownTime2);
+			this.groupBox6.Controls.Add(this.label17);
+			this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.groupBox6.Location = new System.Drawing.Point(572, 203);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(546, 376);
+			this.groupBox6.TabIndex = 14;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Поиск решения";
+			this.groupBox6.Visible = false;
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.buttonSolutionDemoAlgorithm2);
+			this.groupBox7.Controls.Add(this.textBox5);
+			this.groupBox7.Controls.Add(this.buttonAlgorithm2);
+			this.groupBox7.Location = new System.Drawing.Point(277, 28);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(261, 303);
+			this.groupBox7.TabIndex = 13;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Алгоритм-2";
+			// 
+			// buttonSolutionDemoAlgorithm2
+			// 
+			this.buttonSolutionDemoAlgorithm2.Location = new System.Drawing.Point(6, 262);
+			this.buttonSolutionDemoAlgorithm2.Name = "buttonSolutionDemoAlgorithm2";
+			this.buttonSolutionDemoAlgorithm2.Size = new System.Drawing.Size(249, 35);
+			this.buttonSolutionDemoAlgorithm2.TabIndex = 12;
+			this.buttonSolutionDemoAlgorithm2.Text = "Демонстрация решения";
+			this.buttonSolutionDemoAlgorithm2.UseVisualStyleBackColor = true;
+			this.buttonSolutionDemoAlgorithm2.Click += new System.EventHandler(this.ButtonSolutionDemoAlgorithm2Click);
+			// 
+			// textBox5
+			// 
+			this.textBox5.Location = new System.Drawing.Point(6, 64);
+			this.textBox5.Multiline = true;
+			this.textBox5.Name = "textBox5";
+			this.textBox5.ReadOnly = true;
+			this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBox5.Size = new System.Drawing.Size(249, 192);
+			this.textBox5.TabIndex = 10;
+			// 
+			// buttonAlgorithm2
+			// 
+			this.buttonAlgorithm2.Location = new System.Drawing.Point(6, 28);
+			this.buttonAlgorithm2.Name = "buttonAlgorithm2";
+			this.buttonAlgorithm2.Size = new System.Drawing.Size(249, 30);
+			this.buttonAlgorithm2.TabIndex = 11;
+			this.buttonAlgorithm2.Text = "Найти решение";
+			this.buttonAlgorithm2.UseVisualStyleBackColor = true;
+			this.buttonAlgorithm2.Click += new System.EventHandler(this.ButtonAlgorithm2Click);
+			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.buttonSolutionDemoAlgorithm1);
+			this.groupBox8.Controls.Add(this.textBox6);
+			this.groupBox8.Controls.Add(this.buttonAlgorithm1);
+			this.groupBox8.Location = new System.Drawing.Point(10, 28);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(261, 303);
+			this.groupBox8.TabIndex = 3;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Алгоритм-1";
+			// 
+			// buttonSolutionDemoAlgorithm1
+			// 
+			this.buttonSolutionDemoAlgorithm1.Location = new System.Drawing.Point(6, 262);
+			this.buttonSolutionDemoAlgorithm1.Name = "buttonSolutionDemoAlgorithm1";
+			this.buttonSolutionDemoAlgorithm1.Size = new System.Drawing.Size(249, 35);
+			this.buttonSolutionDemoAlgorithm1.TabIndex = 12;
+			this.buttonSolutionDemoAlgorithm1.Text = "Демонстрация решения";
+			this.buttonSolutionDemoAlgorithm1.UseVisualStyleBackColor = true;
+			this.buttonSolutionDemoAlgorithm1.Click += new System.EventHandler(this.ButtonSolutionDemoAlgorithm1Click);
+			// 
+			// textBox6
+			// 
+			this.textBox6.Location = new System.Drawing.Point(6, 64);
+			this.textBox6.Multiline = true;
+			this.textBox6.Name = "textBox6";
+			this.textBox6.ReadOnly = true;
+			this.textBox6.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBox6.Size = new System.Drawing.Size(249, 192);
+			this.textBox6.TabIndex = 10;
+			// 
+			// buttonAlgorithm1
+			// 
+			this.buttonAlgorithm1.Location = new System.Drawing.Point(6, 28);
+			this.buttonAlgorithm1.Name = "buttonAlgorithm1";
+			this.buttonAlgorithm1.Size = new System.Drawing.Size(249, 30);
+			this.buttonAlgorithm1.TabIndex = 11;
+			this.buttonAlgorithm1.Text = "Найти решение";
+			this.buttonAlgorithm1.UseVisualStyleBackColor = true;
+			this.buttonAlgorithm1.Click += new System.EventHandler(this.ButtonAlgorithm1Click);
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label16.Location = new System.Drawing.Point(494, 339);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(38, 24);
+			this.label16.TabIndex = 13;
+			this.label16.Text = "мс.";
+			// 
+			// numericUpDownTime2
+			// 
+			this.numericUpDownTime2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.numericUpDownTime2.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numericUpDownTime2.InterceptArrowKeys = false;
+			this.numericUpDownTime2.Location = new System.Drawing.Point(203, 337);
+			this.numericUpDownTime2.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numericUpDownTime2.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numericUpDownTime2.Name = "numericUpDownTime2";
+			this.numericUpDownTime2.Size = new System.Drawing.Size(291, 29);
+			this.numericUpDownTime2.TabIndex = 10;
+			this.numericUpDownTime2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numericUpDownTime2.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label17.Location = new System.Drawing.Point(6, 339);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(198, 24);
+			this.label17.TabIndex = 10;
+			this.label17.Text = "Задержка анимации:";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.ClientSize = new System.Drawing.Size(1122, 793);
+			this.ClientSize = new System.Drawing.Size(1122, 811);
+			this.Controls.Add(this.groupBox9);
+			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gameField);
+			this.Controls.Add(this.menuStrip);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.KeyPreview = true;
+			this.MainMenuStrip = this.menuStrip;
 			this.Name = "Form1";
 			this.Text = "Cube flip";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormKeyDown);
@@ -603,7 +933,19 @@ namespace Cube_flip
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTime)).EndInit();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
+			this.groupBox9.ResumeLayout(false);
+			this.groupBox9.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
+			this.groupBox8.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTime2)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -647,6 +989,31 @@ namespace Cube_flip
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button buttonShowmapExploredPassagesWidth;
         private System.Windows.Forms.Button buttonShowmapExploredPassagesDepth;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button buttonSolutionDemoAlgorithm2;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button buttonAlgorithm2;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button buttonSolutionDemoAlgorithm1;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Button buttonAlgorithm1;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown numericUpDownTime2;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Button buttonShowmapExploredPassagesAlgorithm2;
+        private System.Windows.Forms.Button buttonShowmapExploredPassagesAlgorithm1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button collectionStatistics2;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.DomainUpDown domainUpDownLevelSelection;
     }
 }
 

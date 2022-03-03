@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Cube_flip
 {
-	partial class AISystem
+	partial class UninformedSearch
 	{
 		private Queue<FieldCell> OW;
 		private Stack<FieldCell> OD;
@@ -16,16 +16,17 @@ namespace Cube_flip
 
 		private int fieldSize;
 		private int[,] field;
-		private int[,] fieldMapMoves;
+
+		List<int[,]> fieldMapMoves;
 
 		private bool noExit = true;
 
 		public enum BoxSides
 		{
-			top,
-			bottom,
 			left,
 			right,
+			top,
+			bottom,
 			front,
 			back
 		}
@@ -38,7 +39,7 @@ namespace Cube_flip
 			right
 		}
 
-		public AISystem(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
+		public UninformedSearch(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
 		{
 			startState = new FieldCell(startStatePanelX, startStatePanelY, startStateSide);
 			finalState = new FieldCell(finalStatePanelX, finalStatePanelY, finalStateSide);
@@ -46,24 +47,12 @@ namespace Cube_flip
 			this.fieldSize = fieldSize;
 
 			this.field = new int[this.fieldSize, this.fieldSize];
-			this.fieldMapMoves = new int[this.fieldSize, this.fieldSize];
-
-			for (int i = 0; i < this.fieldSize; i++)
-				for (int j = 0; j < this.fieldSize; j++)
-				{
-					this.field[i, j] = field[i, j];
-					fieldMapMoves[i, j] = 0;
-				}
+			this.field = field;
 		}
-
 
 		public void FindingWayWidth()
 		{
 			noExit = true;
-
-			for (int i = 0; i < fieldSize; i++)
-				for (int j = 0; j < fieldSize; j++)
-					fieldMapMoves[i, j] = 0;
 
 			OW = new Queue<FieldCell>();
 			CW = new Queue<FieldCell>();
@@ -86,7 +75,6 @@ namespace Cube_flip
 					if (!CW.Contains(p) && !OW.Contains(p))
 					{
 						OW.Enqueue(p);
-						fieldMapMoves[p.GetX, p.GetY]++;
 					}
 
 				CW.Enqueue(temp);
@@ -98,10 +86,6 @@ namespace Cube_flip
 		public void FindingWayDepth()
 		{
 			noExit = true;
-
-			for (int i = 0; i < fieldSize; i++)
-				for (int j = 0; j < fieldSize; j++)
-					fieldMapMoves[i, j] = 0;
 
 			OD = new Stack<FieldCell>();
 			CD = new Queue<FieldCell>();
@@ -120,14 +104,12 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))				
+				foreach (FieldCell p in Moves(temp))
 					if (!CD.Contains(p) && !OD.Contains(p))
 					{
 						OD.Push(p);
-						fieldMapMoves[p.GetX, p.GetY]++;
 					}
 				
-
 				CD.Enqueue(temp);
 			}
 
@@ -138,10 +120,7 @@ namespace Cube_flip
 		{
 			Queue<FieldCell> way = new Queue<FieldCell>();
 
-			FieldCell temporaryWay1;
-			FieldCell temporaryWay2;
-			FieldCell temporaryWay3;
-			FieldCell temporaryWay4;
+			FieldCell temporaryWay;
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
@@ -149,45 +128,44 @@ namespace Cube_flip
 			if (x != 16)			
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
-					temporaryWay1 = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
-					way.Enqueue(temporaryWay1);
+					way.Enqueue(temporaryWay);
 				}
 			
 
 			if (x != 0)			
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
-					temporaryWay2 = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
-					way.Enqueue(temporaryWay2);
+					way.Enqueue(temporaryWay);
 				}			
 
 			if (y != 16)			
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
-					temporaryWay3 = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
-					way.Enqueue(temporaryWay3);
+					way.Enqueue(temporaryWay);
 				}
 			
 			if (y != 0)			
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
-					temporaryWay4 = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
-					way.Enqueue(temporaryWay4);
+					way.Enqueue(temporaryWay);
 				}
 			
-
 			return way;
 		}
 
@@ -282,7 +260,9 @@ namespace Cube_flip
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов: " + Convert.ToString(CW.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(CW.Count) + Environment.NewLine;
+
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(OW.Count) + Environment.NewLine;
 
 			return statistics;
 		}
@@ -300,21 +280,123 @@ namespace Cube_flip
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов: " + Convert.ToString(CD.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(CD.Count) + Environment.NewLine;
+
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(OD.Count) + Environment.NewLine;
 
 			return statistics;
 		}
 
-		public int[,] GetMapMovesWidth()
+		private void FindingMovesWayWidth()
 		{
-			FindingWayWidth();
+			noExit = true;
+
+			int[,] fieldMapMovesСurrent = new int[this.fieldSize, this.fieldSize];
+			for (int i = 0; i < fieldSize; i++)
+				for (int j = 0; j < fieldSize; j++)
+					fieldMapMovesСurrent[i, j] = 0;
+
+			fieldMapMoves = new List<int[,]>();
+
+			OW = new Queue<FieldCell>();
+			CW = new Queue<FieldCell>();
+
+			OW.Enqueue(startState);
+
+			while (OW.Count > 0)
+			{
+				FieldCell temp = OW.Dequeue();
+
+				if (temp == finalState)
+				{
+					finalState.from = temp.from;
+					CW.Enqueue(temp);
+					noExit = false;
+					return;
+				}
+
+				foreach (FieldCell p in Moves(temp))
+					if (!CW.Contains(p) && !OW.Contains(p))
+					{
+						OW.Enqueue(p);
+						fieldMapMovesСurrent[p.GetX, p.GetY]++;
+
+						int[,] fieldMapMovesСurrentRecord = new int[this.fieldSize, this.fieldSize];
+						for (int i = 0; i < fieldSize; i++)
+							for (int j = 0; j < fieldSize; j++)
+								fieldMapMovesСurrentRecord[i, j] = fieldMapMovesСurrent[i, j];
+
+						fieldMapMovesСurrentRecord[temp.GetX, temp.GetY] = -1;
+
+						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
+					}
+
+				CW.Enqueue(temp);
+			}
+
+			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		private void FindingMovesWayDepth()
+		{
+			noExit = true;
+
+			int[,] fieldMapMovesСurrent = new int[this.fieldSize, this.fieldSize];
+			for (int i = 0; i < fieldSize; i++)
+				for (int j = 0; j < fieldSize; j++)
+					fieldMapMovesСurrent[i, j] = 0;
+
+			fieldMapMoves = new List<int[,]>();
+
+			OD = new Stack<FieldCell>();
+			CD = new Queue<FieldCell>();
+
+			OD.Push(startState);
+
+			while (OD.Count > 0)
+			{
+				FieldCell temp = OD.Pop();
+
+				if (temp == finalState)
+				{
+					finalState.from = temp.from;
+					CD.Enqueue(temp);
+					noExit = false;
+					return;
+				}
+
+				foreach (FieldCell p in Moves(temp))
+					if (!CD.Contains(p) && !OD.Contains(p))
+					{
+						OD.Push(p);
+						fieldMapMovesСurrent[p.GetX, p.GetY]++;
+
+						int[,] fieldMapMovesСurrentRecord = new int[this.fieldSize, this.fieldSize];
+						for (int i = 0; i < fieldSize; i++)
+							for (int j = 0; j < fieldSize; j++)
+								fieldMapMovesСurrentRecord[i, j] = fieldMapMovesСurrent[i, j];
+
+						fieldMapMovesСurrentRecord[temp.GetX, temp.GetY] = -1;
+
+						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
+					}
+
+				CD.Enqueue(temp);
+			}
+
+			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		public List<int[,]> GetMapMovesWidth()
+		{
+			FindingMovesWayWidth();
 			return fieldMapMoves;
 		}
 
-		public int[,] GetMapMovesDepth()
+		public List<int[,]> GetMapMovesDepth()
 		{
-			FindingWayDepth();
-			return fieldMapMoves;
+			FindingMovesWayDepth();
+			return  fieldMapMoves;
 		}
 
 		private BoxSides ChangeCurrentSide(TurningSide receivedTurningSide, BoxSides currentDesiredColorSide)
