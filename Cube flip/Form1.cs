@@ -129,6 +129,7 @@ namespace Cube_flip
 					}
 		}
 
+
 		private void NumberDrawingPanel(object sender, PaintEventArgs e)
 		{
 			int cellCounterX = 0;
