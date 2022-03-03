@@ -218,10 +218,10 @@ namespace Cube_flip
 					}
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayWidth();
 			textBox1.Text = artificialIntelligenceSystem.PathOutput();
 		}
@@ -241,10 +241,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayWidth();
 			textBox1.Text = artificialIntelligenceSystem.PathOutput();
 
@@ -267,11 +267,11 @@ namespace Cube_flip
 
 				flipCubeGame.ColoredSide = (BoxSides)ColorSide.Dequeue();
 
-				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
+				field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+				field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 4;
 				field[x, y] = 2;
-				flipCubeGame.СurrentPanelX = x;
-				flipCubeGame.СurrentPanelY = y;
+				flipCubeGame.CurrentX = x;
+				flipCubeGame.CurrentY = y;
 
 				await Task.Run(() => { gameField.Invalidate(); });
 				await Task.Delay((int)numericUpDownTime.Value);
@@ -293,13 +293,13 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesWidth();
 
-			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY);
+			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY);
 			algorithmMoveMap.Show();
 		}
 
@@ -326,10 +326,10 @@ namespace Cube_flip
 				}
 			}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayDepth();
 			textBox2.Text = artificialIntelligenceSystem.PathOutput();
 		}
@@ -349,10 +349,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 4;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayDepth();
 			textBox2.Text = artificialIntelligenceSystem.PathOutput();
 
@@ -375,14 +375,14 @@ namespace Cube_flip
 
 				flipCubeGame.ColoredSide = ColorSide.Dequeue();
 
-				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
+				field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+				field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 4;
 				field[x, y] = 2;
-				flipCubeGame.СurrentPanelX = x;
-				flipCubeGame.СurrentPanelY = y;
+				flipCubeGame.CurrentX = x;
+				flipCubeGame.CurrentY = y;
 
-				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+				field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+				field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
 				await Task.Run(() => { gameField.Invalidate(); });
 				await Task.Delay((int)numericUpDownTime.Value);
@@ -409,13 +409,13 @@ namespace Cube_flip
 				}
 			}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesDepth();
 
-			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY);
+			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY);
 			algorithmMoveMap.Show();
 		}
 
@@ -438,10 +438,10 @@ namespace Cube_flip
 
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 		}
@@ -460,10 +460,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 
@@ -486,11 +486,11 @@ namespace Cube_flip
 
 				flipCubeGame.ColoredSide = (BoxSides)ColorSide.Dequeue();
 
-				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
+				field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+				field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 4;
 				field[x, y] = 2;
-				flipCubeGame.СurrentPanelX = x;
-				flipCubeGame.СurrentPanelY = y;
+				flipCubeGame.CurrentX = x;
+				flipCubeGame.CurrentY = y;
 
 				await Task.Run(() => { gameField.Invalidate(); });
 				await Task.Delay((int)numericUpDownTime2.Value);
@@ -517,14 +517,14 @@ namespace Cube_flip
 				}
 			}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesAlgorithm1();
 			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationAlgorithm1();
 
-			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, listMovesInformation);
+			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY, listMovesInformation);
 			algorithmMoveMap.Show();
 		}
 
@@ -549,10 +549,10 @@ namespace Cube_flip
 					}
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 		}
@@ -572,10 +572,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			artificialIntelligenceSystem.FindingWayAlgorithm2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 
@@ -598,11 +598,11 @@ namespace Cube_flip
 
 				flipCubeGame.ColoredSide = ColorSide.Dequeue();
 
-				field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-				field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 4;
+				field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+				field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 4;
 				field[x, y] = 2;
-				flipCubeGame.СurrentPanelX = x;
-				flipCubeGame.СurrentPanelY = y;
+				flipCubeGame.CurrentX = x;
+				flipCubeGame.CurrentY = y;
 
 				await Task.Run(() => { gameField.Invalidate(); });
 				await Task.Delay((int)numericUpDownTime2.Value);
@@ -629,14 +629,14 @@ namespace Cube_flip
 				}
 			}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesAlgorithm2();
 			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationAlgorithm2();
 
-			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, listMovesInformation);
+			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY, listMovesInformation);
 			algorithmMoveMap.Show();
 		}
 
@@ -646,8 +646,8 @@ namespace Cube_flip
 
 		private void FormKeyDown(object sender, KeyEventArgs e)
 		{
-			int currentX = flipCubeGame.СurrentPanelX;
-			int currentY = flipCubeGame.СurrentPanelY;
+			int currentX = flipCubeGame.CurrentX;
+			int currentY = flipCubeGame.CurrentY;
 
 			switch (e.KeyValue)
 			{
@@ -657,10 +657,10 @@ namespace Cube_flip
 						return;
 					else if (field[currentX, currentY - 1] == 1 || field[currentX, currentY - 1] == 3)
 					{
-						flipCubeGame.СurrentPanelY = currentY - 1;
+						flipCubeGame.CurrentY = currentY - 1;
 
 						field[currentX, currentY] = 4;
-						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+						field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
 						flipCubeGame.ChangeCurrentColor(FlipCubeGame.FlipDirection.left);
 
@@ -674,10 +674,10 @@ namespace Cube_flip
 						return;
 					else if (field[currentX, currentY + 1] == 1 || field[currentX, currentY + 1] == 3)
 					{
-						flipCubeGame.СurrentPanelY = currentY + 1;
+						flipCubeGame.CurrentY = currentY + 1;
 
 						field[currentX, currentY] = 4;
-						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+						field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
 						flipCubeGame.ChangeCurrentColor(FlipCubeGame.FlipDirection.right);
 
@@ -691,10 +691,10 @@ namespace Cube_flip
 						return;
 					else if (field[currentX + 1, currentY] == 1 || field[currentX + 1, currentY] == 3)
 					{
-						flipCubeGame.СurrentPanelX = currentX + 1;
+						flipCubeGame.CurrentX = currentX + 1;
 
 						field[currentX, currentY] = 4;
-						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+						field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
 						flipCubeGame.ChangeCurrentColor(FlipDirection.down);
 
@@ -708,10 +708,10 @@ namespace Cube_flip
 						return;
 					else if (field[currentX - 1, currentY] == 1 || field[currentX - 1, currentY] == 3)
 					{
-						flipCubeGame.СurrentPanelX = currentX - 1;
+						flipCubeGame.CurrentX = currentX - 1;
 
 						field[currentX, currentY] = 4;
-						field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+						field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
 						flipCubeGame.ChangeCurrentColor(FlipDirection.up);
 
@@ -725,11 +725,11 @@ namespace Cube_flip
 					break;
 			}
 
-			field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
-			field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
+			field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
+			field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 
-			if (flipCubeGame.СurrentPanelX == flipCubeGame.FinishPanelX
-				&& flipCubeGame.СurrentPanelY == flipCubeGame.FinishPanelY
+			if (flipCubeGame.CurrentX == flipCubeGame.FinishX
+				&& flipCubeGame.CurrentY == flipCubeGame.FinishY
 				&& BoxSides.bottom == flipCubeGame.ColoredSide)
 			{
 				MessageBox.Show("Победа", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -770,13 +770,13 @@ namespace Cube_flip
 					case MouseButtons.Right:
 						if (field[x, y] != 2 && field[x, y] != 3)
 						{
-							field[flipCubeGame.StartPanelX, flipCubeGame.StartPanelY] = 1;
-							field[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 1;
-							field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+							field[flipCubeGame.StartX, flipCubeGame.StartY] = 1;
+							field[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 1;
+							field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 							field[x, y] = 2;
 
-							flipCubeGame.СurrentPanelX = flipCubeGame.StartPanelX = (int)(numericUpDownStartPositionX.Value = x);
-							flipCubeGame.СurrentPanelY = flipCubeGame.StartPanelY = (int)(numericUpDownStartPositionY.Value = y);
+							flipCubeGame.CurrentX = flipCubeGame.StartX = (int)(numericUpDownStartPositionX.Value = x);
+							flipCubeGame.CurrentY = flipCubeGame.StartY = (int)(numericUpDownStartPositionY.Value = y);
 
 							switch (domainUpDownSideRedFace.Text)
 							{
@@ -809,12 +809,12 @@ namespace Cube_flip
 					case MouseButtons.Middle:
 						if (field[x, y] != 2 && field[x, y] != 3)
 						{
-							field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 1;
-							field[flipCubeGame.StartPanelX, flipCubeGame.StartPanelY] = 2;
+							field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 1;
+							field[flipCubeGame.StartX, flipCubeGame.StartY] = 2;
 							field[x, y] = 3;
 
-							flipCubeGame.FinishPanelX = (int)(numericUpDownEndPositionX.Value = x);
-							flipCubeGame.FinishPanelY = (int)(numericUpDownEndPositionY.Value = y);
+							flipCubeGame.FinishX = (int)(numericUpDownEndPositionX.Value = x);
+							flipCubeGame.FinishY = (int)(numericUpDownEndPositionY.Value = y);
 
 							exitDemo = true;
 							ResetGameField();
@@ -843,10 +843,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			textBox3.Text = artificialIntelligenceSystem.GetStatisticsWidth();
 			textBox4.Text = artificialIntelligenceSystem.GetStatisticsDepth();
 		}
@@ -865,10 +865,10 @@ namespace Cube_flip
 						fieldTemp[i, j] = 1;
 				}
 
-			fieldTemp[flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY] = 2;
-			fieldTemp[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
+			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.СurrentPanelX, flipCubeGame.СurrentPanelY, current, flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY, BoxSides.bottom, fieldTemp, fieldSize);
+			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			textBox8.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm1();
 			textBox7.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm2();
 		}
@@ -943,28 +943,28 @@ namespace Cube_flip
 					break;
 			}
 
-			flipCubeGame.FinishPanelX = (int)numericUpDownEndPositionX.Value;
-			flipCubeGame.FinishPanelY = (int)numericUpDownEndPositionY.Value;
-			flipCubeGame.СurrentPanelX = (int)numericUpDownStartPositionX.Value;
-			flipCubeGame.СurrentPanelY = (int)numericUpDownStartPositionY.Value;
-			flipCubeGame.StartPanelX = (int)numericUpDownStartPositionX.Value;
-			flipCubeGame.StartPanelY = (int)numericUpDownStartPositionY.Value;
+			flipCubeGame.FinishX = (int)numericUpDownEndPositionX.Value;
+			flipCubeGame.FinishY = (int)numericUpDownEndPositionY.Value;
+			flipCubeGame.CurrentX = (int)numericUpDownStartPositionX.Value;
+			flipCubeGame.CurrentY = (int)numericUpDownStartPositionY.Value;
+			flipCubeGame.StartX = (int)numericUpDownStartPositionX.Value;
+			flipCubeGame.StartY = (int)numericUpDownStartPositionY.Value;
 
-			if ((flipCubeGame.StartPanelX == flipCubeGame.FinishPanelX && flipCubeGame.StartPanelY == flipCubeGame.FinishPanelY) ||
+			if ((flipCubeGame.StartX == flipCubeGame.FinishX && flipCubeGame.StartY == flipCubeGame.FinishY) ||
 				(field[(int)numericUpDownEndPositionX.Value, (int)numericUpDownEndPositionY.Value] == 0) ||
 				(field[(int)numericUpDownStartPositionX.Value, (int)numericUpDownStartPositionY.Value] == 0))
 			{
 				MessageBox.Show("Стартовая позиция и конечная должны отличаться!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				flipCubeGame.FinishPanelX = 1;
-				flipCubeGame.FinishPanelY = 8;
+				flipCubeGame.FinishX = 1;
+				flipCubeGame.FinishY = 8;
 				numericUpDownEndPositionX.Value = 1;
 				numericUpDownEndPositionY.Value = 8;
-				flipCubeGame.СurrentPanelX = 15;
-				flipCubeGame.СurrentPanelY = 8;
+				flipCubeGame.CurrentX = 15;
+				flipCubeGame.CurrentY = 8;
 				numericUpDownStartPositionX.Value = 15;
 				numericUpDownStartPositionY.Value = 8;
-				flipCubeGame.StartPanelX = 15;
-				flipCubeGame.StartPanelY = 8;
+				flipCubeGame.StartX = 15;
+				flipCubeGame.StartY = 8;
 				numericUpDownStartPositionX.Value = 15;
 				numericUpDownStartPositionY.Value = 8;
 				flipCubeGame.ColoredSide = BoxSides.top;
@@ -977,8 +977,8 @@ namespace Cube_flip
 					if (field[i, j] == 2 || field[i, j] == 3)
 						field[i, j] = 4;
 
-			field[flipCubeGame.StartPanelX, flipCubeGame.StartPanelY] = 2;
-			field[flipCubeGame.FinishPanelX, flipCubeGame.FinishPanelY] = 3;
+			field[flipCubeGame.StartX, flipCubeGame.StartY] = 2;
+			field[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			exitDemo = true;
 

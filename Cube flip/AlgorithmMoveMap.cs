@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Cube_flip
 {
-    public partial class AlgorithmMoveMap : Form
+	public partial class AlgorithmMoveMap : Form
     {
-        private int FinishPanelX;
-        private int FinishPanelY;
-        private int StartPanelX;
-        private int StartPanelY;
+        private int FinishX;
+        private int FinishY;
+        private int StartX;
+        private int StartY;
         private int fieldSize = 17;
         private int[,,] fieldInformation = new int[17, 17, 3];
         private int[,] field = new int[17, 17];
@@ -24,14 +19,14 @@ namespace Cube_flip
         List<int[,,]> listMovesInformation;
         List<int[,]> listMoves;
 
-        public AlgorithmMoveMap(List<int[,]> listMoves, int StartPanelX, int StartPanelY, int FinishPanelX, int FinishPanelY)
+        public AlgorithmMoveMap(List<int[,]> listMoves, int StartX, int StartY, int FinishX, int FinishY)
         {
             InitializeComponent();
 
-            this.FinishPanelX = FinishPanelY;
-            this.FinishPanelY = FinishPanelX;
-            this.StartPanelX = StartPanelY;
-            this.StartPanelY = StartPanelX;
+            this.FinishX = FinishY;
+            this.FinishY = FinishX;
+            this.StartX = StartY;
+            this.StartY = StartX;
             this.listMoves = listMoves;
 
             if (listMoves.Count > 0)
@@ -82,31 +77,31 @@ namespace Cube_flip
             panel10.BackColor = Color.FromArgb(80, 0, 0);
             panel11.BackColor = Color.Black;
 
-            panel[StartPanelY, StartPanelX].BackColor = Color.White;
+            panel[StartY, StartX].BackColor = Color.White;
             panel8.BackColor = Color.White;
-            panel[StartPanelY, StartPanelX].Paint += new PaintEventHandler(this.StartDrawingPanel);
+            panel[StartY, StartX].Paint += new PaintEventHandler(this.StartDrawingPanel);
             panel8.Paint += new PaintEventHandler(this.StartDrawingPanel);
-            panel[StartPanelY, StartPanelX].Invalidate();
+            panel[StartY, StartX].Invalidate();
             panel8.Invalidate();
 
-            panel[FinishPanelY, FinishPanelX].BackColor = Color.White;
+            panel[FinishY, FinishX].BackColor = Color.White;
             panel9.BackColor = Color.White;
-            panel[FinishPanelY, FinishPanelX].Paint += new PaintEventHandler(this.finishDrawingPanel);
+            panel[FinishY, FinishX].Paint += new PaintEventHandler(this.finishDrawingPanel);
             panel9.Paint += new PaintEventHandler(this.finishDrawingPanel);
-            panel[FinishPanelY, FinishPanelX].Invalidate();
+            panel[FinishY, FinishX].Invalidate();
             panel9.Invalidate();
 
             panelMain.Invalidate();
         }
 
-        public AlgorithmMoveMap(List<int[,]> listMoves, int StartPanelX, int StartPanelY, int FinishPanelX, int FinishPanelY, List<int[,,]> listMovesInformation)
+        public AlgorithmMoveMap(List<int[,]> listMoves, int StartX, int StartY, int FinishX, int FinishY, List<int[,,]> listMovesInformation)
         {
             InitializeComponent();
 
-            this.FinishPanelX = FinishPanelY;
-            this.FinishPanelY = FinishPanelX;
-            this.StartPanelX = StartPanelY;
-            this.StartPanelY = StartPanelX;
+            this.FinishX = FinishY;
+            this.FinishY = FinishX;
+            this.StartX = StartY;
+            this.StartY = StartX;
             this.listMoves = listMoves;
             this.listMovesInformation = listMovesInformation;
 
@@ -165,18 +160,18 @@ namespace Cube_flip
             panel10.BackColor = Color.FromArgb(80, 0, 0);
             panel11.BackColor = Color.Black;
 
-            panel[StartPanelY, StartPanelX].BackColor = Color.White;
+            panel[StartY, StartX].BackColor = Color.White;
             panel8.BackColor = Color.White;
-            panel[StartPanelY, StartPanelX].Paint += new PaintEventHandler(this.StartDrawingPanel);
+            panel[StartY, StartX].Paint += new PaintEventHandler(this.StartDrawingPanel);
             panel8.Paint += new PaintEventHandler(this.StartDrawingPanel);
-            panel[StartPanelY, StartPanelX].Invalidate();
+            panel[StartY, StartX].Invalidate();
             panel8.Invalidate();
 
-            panel[FinishPanelY, FinishPanelX].BackColor = Color.White;
+            panel[FinishY, FinishX].BackColor = Color.White;
             panel9.BackColor = Color.White;
-            panel[FinishPanelY, FinishPanelX].Paint += new PaintEventHandler(this.finishDrawingPanel);
+            panel[FinishY, FinishX].Paint += new PaintEventHandler(this.finishDrawingPanel);
             panel9.Paint += new PaintEventHandler(this.finishDrawingPanel);
-            panel[FinishPanelY, FinishPanelX].Invalidate();
+            panel[FinishY, FinishX].Invalidate();
             panel9.Invalidate();
 
             panelMain.Invalidate();

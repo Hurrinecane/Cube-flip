@@ -2,12 +2,12 @@
 {
 	class FlipCubeGame
 	{
-		private int currentPanelX;
-		private int currentPanelY;
-		private int startPanelX;
-		private int startPanelY;
-		private int finishPanelX;
-		private int finishPanelY;
+		private int currentX;
+		private int currentY;
+		private int startX;
+		private int startY;
+		private int finishX;
+		private int finishY;
 		private BoxSides winSide;
 
 		public enum BoxSides
@@ -29,51 +29,51 @@
 		}
 
 
-		public FlipCubeGame(int startPanelX, int startPanelY, int finishPanelX, int finishPanelY, BoxSides currentDesiredColorSide)
+		public FlipCubeGame(int startX, int startY, int finishX, int finishY, BoxSides currentDesiredColorSide)
 		{
-			this.startPanelX = startPanelX;
-			this.startPanelY = startPanelY;
-			this.finishPanelX = finishPanelX;
-			this.finishPanelY = finishPanelY;
+			this.startX = startX;
+			this.startY = startY;
+			this.finishX = finishX;
+			this.finishY = finishY;
 			this.winSide = currentDesiredColorSide;
-			currentPanelX = startPanelX;
-			currentPanelY = startPanelY;
+			currentX = startX;
+			currentY = startY;
 		}
 
-		public int СurrentPanelX
+		public int CurrentX
 		{
-			get { return currentPanelX; }
-			set { currentPanelX = value; }
+			get { return currentX; }
+			set { currentX = value; }
 		}
 
-		public int СurrentPanelY
+		public int CurrentY
 		{
-			get { return currentPanelY; }
-			set { currentPanelY = value; }
+			get { return currentY; }
+			set { currentY = value; }
 		}
 
-		public int StartPanelX
+		public int StartX
 		{
-			get { return startPanelX; }
-			set { startPanelX = value; }
+			get { return startX; }
+			set { startX = value; }
 		}
 
-		public int StartPanelY
+		public int StartY
 		{
-			get { return startPanelY; }
-			set { startPanelY = value; }
+			get { return startY; }
+			set { startY = value; }
 		}
 
-		public int FinishPanelX
+		public int FinishX
 		{
-			get { return finishPanelX; }
-			set { finishPanelX = value; }
+			get { return finishX; }
+			set { finishX = value; }
 		}
 
-		public int FinishPanelY
+		public int FinishY
 		{
-			get { return finishPanelY; }
-			set { finishPanelY = value; }
+			get { return finishY; }
+			set { finishY = value; }
 		}
 
 		public BoxSides ColoredSide

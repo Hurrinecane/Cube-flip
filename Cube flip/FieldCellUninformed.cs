@@ -13,10 +13,10 @@ namespace Cube_flip
 			private BoxSides Side;
 			public FieldCell from = null;
 
-			public FieldCell(int currentPanelX, int currentPanelY, BoxSides currentDesiredSide)
+			public FieldCell(int currentX, int currentY, BoxSides currentDesiredSide)
 			{
-				this.X = currentPanelX;
-				this.Y = currentPanelY;
+				this.X = currentX;
+				this.Y = currentY;
 				this.Side = currentDesiredSide;
 			}
 
