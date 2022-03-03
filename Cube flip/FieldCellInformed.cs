@@ -13,17 +13,17 @@ namespace Cube_flip
 			private BoxSides Side;
 			public FieldCell from = null;
 
-			private int g;
-			private int h;
+			private int depth;
+			private int heuristicValue;
 
 			public FieldCell(int currentX, int currentY, BoxSides currentDesiredSide)
 			{
-				this.X = currentX;
-				this.Y = currentY;
-				this.Side = currentDesiredSide;
+				X = currentX;
+				Y = currentY;
+				Side = currentDesiredSide;
 
-				g = 0;
-				h = 0;
+				depth = 0;
+				heuristicValue = 0;
 			}
 
 			public int GetX
@@ -36,21 +36,21 @@ namespace Cube_flip
 				get { return Y; }
 			}
 
-			public int G
+			public int Depth
 			{
-				get { return g; }
-				set { g = value; }
+				get { return depth; }
+				set { depth = value; }
 			}
 
-			public int H
+			public int HeuristicValue
 			{
-				get { return h; }
-				set { h = value; }
+				get { return heuristicValue; }
+				set { heuristicValue = value; }
 			}
 
 			public int Value
 			{
-				get { return g+h; }
+				get { return depth+heuristicValue; }
 			}
 
 			public BoxSides GetSide

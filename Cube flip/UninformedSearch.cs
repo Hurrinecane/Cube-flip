@@ -111,7 +111,7 @@ namespace Cube_flip
 			if (x != 16)			
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(FlipDirection.down, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -122,7 +122,7 @@ namespace Cube_flip
 			if (x != 0)			
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(FlipDirection.up, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -132,7 +132,7 @@ namespace Cube_flip
 			if (y != 16)			
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(FlipDirection.right, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -142,7 +142,7 @@ namespace Cube_flip
 			if (y != 0)			
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(FlipDirection.left, currentPosition.GetSide))
+					temporaryWay = new FieldCell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -380,83 +380,6 @@ namespace Cube_flip
 		{
 			FindingMovesWayDepth();
 			return  fieldMapMoves;
-		}
-
-		private BoxSides ChangeCurrentSide(FlipDirection receivedTurningSide, BoxSides currentDesiredColorSide)
-		{
-			switch (receivedTurningSide)
-			{
-				case FlipDirection.left:
-					switch (currentDesiredColorSide)
-					{
-						case BoxSides.top:
-							return BoxSides.left;
-						case BoxSides.left:
-							return BoxSides.bottom;
-						case BoxSides.right:
-							return BoxSides.top;
-						case BoxSides.bottom:
-							return BoxSides.right;
-						case BoxSides.front:
-							return BoxSides.front;
-						case BoxSides.back:
-							return BoxSides.back;
-					}
-					break;
-				case FlipDirection.right:
-					switch (currentDesiredColorSide)
-					{
-						case BoxSides.top:
-							return BoxSides.right;
-						case BoxSides.left:
-							return BoxSides.top;
-						case BoxSides.right:
-							return BoxSides.bottom;
-						case BoxSides.bottom:
-							return BoxSides.left;
-						case BoxSides.front:
-							return BoxSides.front;
-						case BoxSides.back:
-							return BoxSides.back;
-					}
-					break;
-				case FlipDirection.up:
-					switch (currentDesiredColorSide)
-					{
-						case BoxSides.top:
-							return BoxSides.front;
-						case BoxSides.left:
-							return BoxSides.left;
-						case BoxSides.right:
-							return BoxSides.right;
-						case BoxSides.bottom:
-							return BoxSides.back;
-						case BoxSides.front:
-							return BoxSides.bottom;
-						case BoxSides.back:
-							return BoxSides.top;
-					}
-					break;
-				case FlipDirection.down:
-					switch (currentDesiredColorSide)
-					{
-						case BoxSides.top:
-							return BoxSides.back;
-						case BoxSides.left:
-							return BoxSides.left;
-						case BoxSides.right:
-							return BoxSides.right;
-						case BoxSides.bottom:
-							return BoxSides.front;
-						case BoxSides.front:
-							return BoxSides.top;
-						case BoxSides.back:
-							return BoxSides.bottom;
-					}
-					break;
-			}
-
-			return BoxSides.top;
 		}
 	}
 }

@@ -82,103 +82,87 @@
 			set { winSide = value; }
 		}
 
-		public void ChangeCurrentColor(FlipDirection receivedTurningSide)
+		public void ChangeCurrentColor(FlipDirection flipDir)
 		{
-			switch (receivedTurningSide)
+			winSide = CalcClrSideFlip(flipDir, winSide);
+		}
+
+		public static BoxSides CalcClrSideFlip(FlipDirection flipDir, BoxSides currentClrSide)
+		{
+			switch (flipDir)
 			{
 				case FlipDirection.left:
-					switch (winSide)
+					switch (currentClrSide)
 					{
 						case BoxSides.top:
-							winSide = BoxSides.left;
-							break;
+							return BoxSides.left;
 						case BoxSides.left:
-							winSide = BoxSides.bottom;
-							break;
+							return BoxSides.bottom;
 						case BoxSides.right:
-							winSide = BoxSides.top;
-							break;
+							return BoxSides.top;
 						case BoxSides.bottom:
-							winSide = BoxSides.right;
-							break;
+							return BoxSides.right;
 						case BoxSides.front:
-							winSide = BoxSides.front;
-							break;
+							return BoxSides.front;
 						case BoxSides.back:
-							winSide = BoxSides.back;
-							break;
+							return BoxSides.back;
 					}
 					break;
 				case FlipDirection.right:
-					switch (winSide)
+					switch (currentClrSide)
 					{
 						case BoxSides.top:
-							winSide = BoxSides.right;
-							break;
+							return BoxSides.right;
 						case BoxSides.left:
-							winSide = BoxSides.top;
-							break;
+							return BoxSides.top;
 						case BoxSides.right:
-							winSide = BoxSides.bottom;
-							break;
+							return BoxSides.bottom;
 						case BoxSides.bottom:
-							winSide = BoxSides.left;
-							break;
+							return BoxSides.left;
 						case BoxSides.front:
-							winSide = BoxSides.front;
-							break;
+							return BoxSides.front;
 						case BoxSides.back:
-							winSide = BoxSides.back;
-							break;
+							return BoxSides.back;
 					}
 					break;
 				case FlipDirection.up:
-					switch (winSide)
+					switch (currentClrSide)
 					{
 						case BoxSides.top:
-							winSide = BoxSides.front;
-							break;
+							return BoxSides.front;
 						case BoxSides.left:
-							winSide = BoxSides.left;
-							break;
+							return BoxSides.left;
 						case BoxSides.right:
-							winSide = BoxSides.right;
-							break;
+							return BoxSides.right;
 						case BoxSides.bottom:
-							winSide = BoxSides.back;
-							break;
+							return BoxSides.back;
 						case BoxSides.front:
-							winSide = BoxSides.bottom;
-							break;
+							return BoxSides.bottom;
 						case BoxSides.back:
-							winSide = BoxSides.top;
-							break;
+							return BoxSides.top;
 					}
 					break;
 				case FlipDirection.down:
-					switch (winSide)
+					switch (currentClrSide)
 					{
 						case BoxSides.top:
-							winSide = BoxSides.back;
-							break;
+							return BoxSides.back;
 						case BoxSides.left:
-							winSide = BoxSides.left;
-							break;
+							return BoxSides.left;
 						case BoxSides.right:
-							winSide = BoxSides.right;
-							break;
+							return BoxSides.right;
 						case BoxSides.bottom:
-							winSide = BoxSides.front;
-							break;
+							return BoxSides.front;
 						case BoxSides.front:
-							winSide = BoxSides.top;
-							break;
+							return BoxSides.top;
 						case BoxSides.back:
-							winSide = BoxSides.bottom;
-							break;
+							return BoxSides.bottom;
 					}
 					break;
 			}
+
+			return BoxSides.top;
 		}
+
 	}
 }
