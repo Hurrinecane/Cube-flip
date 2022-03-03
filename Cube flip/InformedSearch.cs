@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
@@ -21,24 +22,6 @@ namespace Cube_flip
 		private int[,] field;
 
 		private bool noExit = true;
-
-		public enum BoxSides
-		{
-			left,
-			right,
-			top,
-			bottom,
-			front,
-			back
-		}
-
-		public enum TurningSide
-		{
-			up,
-			down,
-			left,
-			right
-		}
 
 		public InformedSearch(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
 		{
@@ -66,7 +49,7 @@ namespace Cube_flip
 
             while (O1.Count > 0)
             {
-                FieldCell temp = getMinimumValue(O1);
+                FieldCell temp = GetMinimumValue(O1);
                 O1.Remove(temp);
 
                 if (temp == finalState)
@@ -122,7 +105,7 @@ namespace Cube_flip
 
             while (O2.Count > 0)
             {
-                FieldCell temp = getMinimumValue(O2);
+                FieldCell temp = GetMinimumValue(O2);
                 O2.Remove(temp);
 
                 if (temp == finalState)
@@ -181,7 +164,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+                    int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -193,7 +176,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+                    int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -204,7 +187,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+                    int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -215,7 +198,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+                    int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -238,7 +221,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x + 1, y, ChangeCurrentSide(TurningSide.down, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
+                    int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -250,7 +233,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x - 1, y, ChangeCurrentSide(TurningSide.up, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
+                    int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -261,7 +244,7 @@ namespace Cube_flip
                 {
                     temporaryWay = new FieldCell(x, y + 1, ChangeCurrentSide(TurningSide.right, currentPosition.GetSide));
                     temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
+                    int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -270,9 +253,11 @@ namespace Cube_flip
             if (y != 0)
                 if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
                 {
-                    temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide));
-                    temporaryWay.from = currentPosition;
-                    int h = getHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
+					temporaryWay = new FieldCell(x, y - 1, ChangeCurrentSide(TurningSide.left, currentPosition.GetSide))
+					{
+						from = currentPosition
+					};
+					int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, finalState.GetSide, temporaryWay.GetSide);
                     temporaryWay.H = h;
                     temporaryWay.G = currentPosition.G + 1;
                     way.Add(temporaryWay);
@@ -281,12 +266,12 @@ namespace Cube_flip
             return way;
         }
 
-        private int getHeuristicValueAlgorithm1(int startX, int startY, int finalX, int finalY)
+        private int GetHeuristicValueAlgorithm1(int startX, int startY, int finalX, int finalY)
         {
             return (Math.Abs(startX - finalX) + Math.Abs(startY - finalY));
         }
 
-        private int getHeuristicValueAlgorithm2(int startX, int startY, int finalX, int finalY, BoxSides finalStateSide, BoxSides currentStateSide)
+        private int GetHeuristicValueAlgorithm2(int startX, int startY, int finalX, int finalY, BoxSides finalStateSide, BoxSides currentStateSide)
         {
             int requiredTurns = 0;
 
@@ -790,7 +775,7 @@ namespace Cube_flip
             return requiredTurns;
         }
 
-        private FieldCell getMinimumValue(List<FieldCell> O1)
+        private FieldCell GetMinimumValue(List<FieldCell> O1)
         {
             FieldCell result = O1[0];
 
@@ -944,7 +929,7 @@ namespace Cube_flip
 
             while (O1.Count > 0)
             {
-                FieldCell temp = getMinimumValue(O1);
+                FieldCell temp = GetMinimumValue(O1);
                 O1.Remove(temp);
 
                 if (temp == finalState)
@@ -1090,7 +1075,7 @@ namespace Cube_flip
 
             while (O2.Count > 0)
             {
-                FieldCell temp = getMinimumValue(O2);
+                FieldCell temp = GetMinimumValue(O2);
                 O2.Remove(temp);
 
                 if (temp == finalState)
