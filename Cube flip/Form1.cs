@@ -33,11 +33,11 @@ namespace Cube_flip
 				for (int j = 0; j < fieldSize; j++)
 					switch (field[i, j])
 					{
-						case 2:
+						case (int)CellTypes.box:
 							numericUpDownStartPositionX.Value = i;
 							numericUpDownStartPositionY.Value = j;
 							break;
-						case 3:
+						case (int)CellTypes.target:
 							numericUpDownEndPositionX.Value = i;
 							numericUpDownEndPositionY.Value = j;
 							break;
@@ -74,17 +74,17 @@ namespace Cube_flip
 
 					switch (field[j, i])
 					{
-						case 0:                                                             //wall
+						case (int)CellTypes.wall:                                                             //wall
 							panel[i, j].BackColor = Color.Black;
 							break;
 						case 1:                                                             //space
 							panel[i, j].BackColor = Color.White;
 							break;
-						case 2:                                                             //box					
+						case (int)CellTypes.box:                                                             //box					
 							panel[i, j].Paint += new PaintEventHandler(CubeRenderingPanel);
 							panel[i, j].BackColor = Color.Green;
 							break;
-						case 3:                                                             //target
+						case (int)CellTypes.target:                                                             //target
 							panel[i, j].Paint += new PaintEventHandler(TargetDrawingPanel);
 							panel[i, j].BackColor = Color.Yellow;
 							break;
@@ -101,7 +101,7 @@ namespace Cube_flip
 				for (int j = 0; j < fieldSize; j++)
 					switch (field[j, i])
 					{
-						case 2:                                                             //box
+						case (int)CellTypes.box:                                                             //box
 							if (panel[i, j].BackColor != Color.Green)
 							{
 								panel[i, j].Paint -= new PaintEventHandler(TargetDrawingPanel);
@@ -110,7 +110,7 @@ namespace Cube_flip
 								panel[i, j].Invalidate();
 							}
 							break;
-						case 3:                                                             //target
+						case (int)CellTypes.target:                                                             //target
 							if (panel[i, j].BackColor != Color.Yellow)
 							{
 								panel[i, j].Paint += new PaintEventHandler(TargetDrawingPanel);
@@ -119,7 +119,7 @@ namespace Cube_flip
 								panel[i, j].Invalidate();
 							}
 							break;
-						case 4:                                                             //reset
+						case (int)CellTypes.reset:                                                             //reset
 							panel[i, j].Paint -= new PaintEventHandler(CubeRenderingPanel);
 							panel[i, j].Paint -= new PaintEventHandler(TargetDrawingPanel);
 							panel[i, j].BackColor = Color.White;
@@ -211,11 +211,8 @@ namespace Cube_flip
 				for (int j = 0; j < fieldSize; j++)
 				{
 					fieldTemp[i, j] = field[i, j];
-
 					if (fieldTemp[i, j] == 2 || fieldTemp[i, j] == 3)
-					{
 						fieldTemp[i, j] = 1;
-					}
 				}
 
 			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
@@ -296,8 +293,8 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			UninformedSearch artificialIntelligenceSystem = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesWidth();
+			UninformedSearch uninformedSearch = new UninformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
+			List<int[,]> listMoves = uninformedSearch.GetMapMovesWidth();
 
 			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY);
 			algorithmMoveMap.Show();
@@ -425,8 +422,6 @@ namespace Cube_flip
 
 		private void ButtonAlgorithm1Click(object sender, EventArgs e)
 		{
-			BoxSides current = flipCubeGame.ColoredSide;
-
 			int[,] fieldTemp = new int[fieldSize, fieldSize];
 
 			for (int i = 0; i < fieldSize; i++)
@@ -441,9 +436,9 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.CurrentX, flipCubeGame.CurrentY] = 2;
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
-			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			artificialIntelligenceSystem.FindingWayAlgorithm1();
-			textBox6.Text = artificialIntelligenceSystem.PathOutput();
+			InformedSearch informedSearch = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.ColoredSide, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
+			informedSearch.FindWayAlgorithm1();
+			textBox6.Text = informedSearch.PathOutput();
 		}
 
 		async private void ButtonSolutionDemoAlgorithm1Click(object sender, EventArgs e)
@@ -464,7 +459,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			artificialIntelligenceSystem.FindingWayAlgorithm1();
+			artificialIntelligenceSystem.FindWayAlgorithm1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();

@@ -8,8 +8,8 @@ namespace Cube_flip
 {
 	partial class InformedSearch
 	{
-		private List<FieldCell> O1;
-		private List<FieldCell> C1;
+		private List<FieldCell> Paths1;
+		private List<FieldCell> Variants1;
 		private List<FieldCell> O2;
 		private List<FieldCell> C2;
 		private FieldCell startState;
@@ -44,60 +44,123 @@ namespace Cube_flip
 
 		#region Algorithm1
 
-		public void FindingWayAlgorithm1() //Игнорируем стены и стороны куба
+		public void FindWayAlgorithm1() //Игнорируем стены и стороны куба
 		{
 			noExit = true;
 
-			O1 = new List<FieldCell>();
-			C1 = new List<FieldCell>();
+			Paths1 = new List<FieldCell>();
+			Variants1 = new List<FieldCell>();
 
-			O1.Add(startState);
+			Paths1.Add(startState);
 
-			while (O1.Count > 0)
+			while (Paths1.Count > 0)
 			{
-				FieldCell temp = GetMinimumValue(O1);
-				O1.Remove(temp);
+				FieldCell temp = GetMinimumValue(Paths1);
+				Paths1.Remove(temp);
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					C1.Add(temp);
+					Variants1.Add(temp);
 					noExit = false;
 					return;
 				}
 
-				foreach (FieldCell p in MovesAlgorithm1(temp))
-					if (!O1.Contains(p) && !C1.Contains(p))
-						O1.Add(p);
-					else if (O1.Contains(p))
+				foreach (FieldCell p in CalcMovesAlgorithm1(temp))
+					if (!Paths1.Contains(p) && !Variants1.Contains(p))              //Если видем клетку в первый раз
+						Paths1.Add(p);                                              //Добавляем ее в пути
+					else if (Paths1.Contains(p))                                    //Если она есть в путях
 					{
-						int index = O1.IndexOf(p);
+						int index = Paths1.IndexOf(p);
+						FieldCell similar = Paths1[index];
 
-						FieldCell similar = O1[index];
-
-						if (p.Value < similar.Value)
+						if (p.Value < similar.Value)                                //Проверяем, оптимальный ли до нее путь
 						{
-							O1.Remove(similar);
-							O1.Add(p);
+							Paths1.Remove(similar);                                 //Если да, заменяем
+							Paths1.Add(p);
 						}
 					}
-					else if (C1.Contains(p))
+					else if (Variants1.Contains(p))                                 //Если ее нет в путях, но она есть в вариантах
 					{
-						int index = C1.IndexOf(p);
+						int index = Variants1.IndexOf(p);
+						FieldCell similar = Variants1[index];
 
-						FieldCell similar = C1[index];
-
-						if (p.Value < similar.Value)
+						if (p.Value < similar.Value)                                //Проверяем, оптимальный ли до нее путь
 						{
-							C1.Remove(similar);
-							O1.Add(p);
+							Variants1.Remove(similar);                              //Если да, убираем ее из вариантов
+							Paths1.Add(p);                                          //И переносим в пути для проверки
 						}
 					}
 
-				C1.Add(temp);
+				Variants1.Add(temp);                                                //Добавляем клетку в варианты
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		private List<FieldCell> CalcMovesAlgorithm1(FieldCell currentPosition)
+		{
+			List<FieldCell> way = new List<FieldCell>();
+
+			FieldCell temporaryWay;
+
+			int x = currentPosition.GetX;
+			int y = currentPosition.GetY;
+
+			if (x != 16)                                                                                                        //can go down
+				if (field[x + 1, y] == (int)CellTypes.space || field[x + 1, y] == (int)CellTypes.target)
+				{
+					temporaryWay = new FieldCell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
+					{
+						from = currentPosition
+					};
+					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+					temporaryWay.HeuristicValue = h;
+					temporaryWay.Depth = currentPosition.Depth + 1;
+					way.Add(temporaryWay);
+				}
+
+
+			if (x != 0)                                                                                                         //can go up
+				if (field[x - 1, y] == (int)CellTypes.space || field[x - 1, y] == (int)CellTypes.target)
+				{
+					temporaryWay = new FieldCell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
+					{
+						from = currentPosition
+					};
+					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+					temporaryWay.HeuristicValue = h;
+					temporaryWay.Depth = currentPosition.Depth + 1;
+					way.Add(temporaryWay);
+				}
+
+			if (y != 16)                                                                                                        //can go right
+				if (field[x, y + 1] == (int)CellTypes.space || field[x, y + 1] == (int)CellTypes.target)
+				{
+					temporaryWay = new FieldCell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
+					{
+						from = currentPosition
+					};
+					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+					temporaryWay.HeuristicValue = h;
+					temporaryWay.Depth = currentPosition.Depth + 1;
+					way.Add(temporaryWay);
+				}
+
+			if (y != 0)                                                                                                         //can go left
+				if (field[x, y - 1] == (int)CellTypes.space || field[x, y - 1] == (int)CellTypes.target)
+				{
+					temporaryWay = new FieldCell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
+					{
+						from = currentPosition
+					};
+					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
+					temporaryWay.HeuristicValue = h;
+					temporaryWay.Depth = currentPosition.Depth + 1;
+					way.Add(temporaryWay);
+				}
+
+			return way;
 		}
 
 		public List<int[,,]> GetMapMovesInformationAlgorithm1()
@@ -118,16 +181,16 @@ namespace Cube_flip
 
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
-			FindingWayAlgorithm1();
+			FindWayAlgorithm1();
 			stopWatch.Stop();
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(C1.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(Variants1.Count) + Environment.NewLine;
 
-			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(O1.Count) + Environment.NewLine;
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(Paths1.Count) + Environment.NewLine;
 
 			return statistics;
 		}
@@ -150,28 +213,28 @@ namespace Cube_flip
 			listMovesInformation = new List<int[,,]>();
 			fieldMapMoves = new List<int[,]>();
 
-			O1 = new List<FieldCell>();
-			C1 = new List<FieldCell>();
+			Paths1 = new List<FieldCell>();
+			Variants1 = new List<FieldCell>();
 
-			O1.Add(startState);
+			Paths1.Add(startState);
 
-			while (O1.Count > 0)
+			while (Paths1.Count > 0)
 			{
-				FieldCell temp = GetMinimumValue(O1);
-				O1.Remove(temp);
+				FieldCell temp = GetMinimumValue(Paths1);
+				Paths1.Remove(temp);
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					C1.Add(temp);
+					Variants1.Add(temp);
 					noExit = false;
 					return;
 				}
 
-				foreach (FieldCell p in MovesAlgorithm1(temp))
-					if (!O1.Contains(p) && !C1.Contains(p))
+				foreach (FieldCell p in CalcMovesAlgorithm1(temp))
+					if (!Paths1.Contains(p) && !Variants1.Contains(p))
 					{
-						O1.Add(p);
+						Paths1.Add(p);
 						fieldMapMovesСurrent[p.GetX, p.GetY]++;
 						fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
 						fieldMapMovesСurrentInformation[p.GetX, p.GetY, 1] = p.HeuristicValue;
@@ -193,16 +256,16 @@ namespace Cube_flip
 						listMovesInformation.Add(fieldMapMovesСurrentInformationRecord);
 						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 					}
-					else if (O1.Contains(p))
+					else if (Paths1.Contains(p))
 					{
-						int index = O1.IndexOf(p);
+						int index = Paths1.IndexOf(p);
 
-						FieldCell similar = O1[index];
+						FieldCell similar = Paths1[index];
 
 						if (p.Value < similar.Value)
 						{
-							O1.Remove(similar);
-							O1.Add(p);
+							Paths1.Remove(similar);
+							Paths1.Add(p);
 
 							fieldMapMovesСurrent[p.GetX, p.GetY]++;
 							fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
@@ -226,16 +289,16 @@ namespace Cube_flip
 							fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 						}
 					}
-					else if (C1.Contains(p))
+					else if (Variants1.Contains(p))
 					{
-						int index = C1.IndexOf(p);
+						int index = Variants1.IndexOf(p);
 
-						FieldCell similar = C1[index];
+						FieldCell similar = Variants1[index];
 
 						if (p.Value < similar.Value)
 						{
-							C1.Remove(similar);
-							O1.Add(p);
+							Variants1.Remove(similar);
+							Paths1.Add(p);
 
 							fieldMapMovesСurrent[p.GetX, p.GetY]++;
 							fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
@@ -260,76 +323,12 @@ namespace Cube_flip
 						}
 					}
 
-				C1.Add(temp);
+				Variants1.Add(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private List<FieldCell> MovesAlgorithm1(FieldCell currentPosition)
-		{
-			List<FieldCell> way = new List<FieldCell>();
-
-			FieldCell temporaryWay;
-
-			int x = currentPosition.GetX;
-			int y = currentPosition.GetY;
-
-			if (x != 16)
-				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
-				{
-					temporaryWay = new FieldCell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
-					{
-						from = currentPosition
-					};
-					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
-					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
-					way.Add(temporaryWay);
-				}
-
-
-			if (x != 0)
-				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
-				{
-					temporaryWay = new FieldCell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
-					{
-						from = currentPosition
-					};
-					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
-					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
-					way.Add(temporaryWay);
-				}
-
-			if (y != 16)
-				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
-				{
-					temporaryWay = new FieldCell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
-					{
-						from = currentPosition
-					};
-					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
-					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
-					way.Add(temporaryWay);
-				}
-
-			if (y != 0)
-				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
-				{
-					temporaryWay = new FieldCell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
-					{
-						from = currentPosition
-					};
-					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
-					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
-					way.Add(temporaryWay);
-				}
-
-			return way;
-		}
 
 		#endregion
 

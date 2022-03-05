@@ -10,6 +10,15 @@
 		private int finishY;
 		private BoxSides winSide;
 
+		public enum CellTypes
+		{
+			wall,
+			space,
+			box,
+			target,
+			reset
+		}
+
 		public enum BoxSides
 		{
 			top,

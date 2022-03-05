@@ -1,20 +1,20 @@
 ﻿using System;
+using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
-	partial class AISystem
-	{
-		private class FieldCell : IEquatable<FieldCell>
+	internal class FieldCell : IEquatable<FieldCell>
 		{
 			private int X;
 			private int Y;
+
 			private BoxSides Side;
 			public FieldCell from = null;
 
-			public FieldCell(int currentPanelX, int currentPanelY, BoxSides currentDesiredSide)
+			public FieldCell(int currentX, int currentY, BoxSides currentDesiredSide)
 			{
-				this.X = currentPanelX;
-				this.Y = currentPanelY;
+				this.X = currentX;
+				this.Y = currentY;
 				this.Side = currentDesiredSide;
 			}
 
@@ -56,4 +56,3 @@ namespace Cube_flip
 			}
 		}
 	}
-}
