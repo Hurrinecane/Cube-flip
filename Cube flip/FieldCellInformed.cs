@@ -3,18 +3,18 @@ using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
-        class FieldCellInf : IEquatable<FieldCellInf>
+        class CellInf : IEquatable<CellInf>
         {
 			private int X;
 			private int Y;
 
 			private BoxSides Side;
-			public FieldCellInf from = null;
+			public CellInf from = null;
 
 			private int depth;
 			private int heuristicValue;
 
-			public FieldCellInf(int currentX, int currentY, BoxSides currentDesiredSide)
+			public CellInf(int currentX, int currentY, BoxSides currentDesiredSide)
 			{
 				X = currentX;
 				Y = currentY;
@@ -56,7 +56,7 @@ namespace Cube_flip
 				get { return Side; }
 			}
 
-			public static bool operator ==(FieldCellInf A, FieldCellInf B)
+			public static bool operator ==(CellInf A, CellInf B)
 			{
 				if (A.X == B.X && A.Y == B.Y && A.Side == B.Side)
 					return true;
@@ -64,7 +64,7 @@ namespace Cube_flip
 				return false;
 			}
 
-			public static bool operator !=(FieldCellInf A, FieldCellInf B)
+			public static bool operator !=(CellInf A, CellInf B)
 			{
 				if (A.X != B.X || A.Y != B.Y || A.Side != B.Side)
 					return true;
@@ -72,7 +72,7 @@ namespace Cube_flip
 				return false;
 			}
 
-			public static bool operator <(FieldCellInf A, FieldCellInf B)
+			public static bool operator <(CellInf A, CellInf B)
 			{
 				if (A.Value < B.Value)
 					return true;
@@ -80,14 +80,14 @@ namespace Cube_flip
 				return false;
 			}
 
-			public static bool operator >(FieldCellInf A, FieldCellInf B)
+			public static bool operator >(CellInf A, CellInf B)
 			{
 				if (A.Value > B.Value)
 					return true;
 				return false;
 			}
 
-			public bool Equals(FieldCellInf other)
+			public bool Equals(CellInf other)
 			{
 				if (this.X == other.X && this.Y == other.Y && this.Side == other.Side) return true;
 				else return false;

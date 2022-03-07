@@ -424,6 +424,7 @@ namespace Cube_flip
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Поиск решения";
+			this.groupBox2.Visible = false;
 			// 
 			// groupBox4
 			// 
@@ -555,6 +556,7 @@ namespace Cube_flip
 			this.groupBox5.TabIndex = 0;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Статистика";
+			this.groupBox5.Visible = false;
 			// 
 			// buttonShowmapExploredPassagesDepth
 			// 
@@ -580,7 +582,7 @@ namespace Cube_flip
 			// 
 			this.label15.AutoSize = true;
 			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label15.Location = new System.Drawing.Point(691, 35);
+			this.label15.Location = new System.Drawing.Point(691, 31);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(239, 24);
 			this.label15.TabIndex = 16;
@@ -590,7 +592,7 @@ namespace Cube_flip
 			// 
 			this.label14.AutoSize = true;
 			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label14.Location = new System.Drawing.Point(177, 38);
+			this.label14.Location = new System.Drawing.Point(177, 31);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(236, 24);
 			this.label14.TabIndex = 15;
@@ -642,7 +644,6 @@ namespace Cube_flip
 			this.groupBox9.TabIndex = 19;
 			this.groupBox9.TabStop = false;
 			this.groupBox9.Text = "Статистика";
-			this.groupBox9.Visible = false;
 			// 
 			// buttonShowmapExploredPassagesAlgorithm2
 			// 
@@ -735,8 +736,6 @@ namespace Cube_flip
 			// 
 			// toolStripMenuItem2
 			// 
-			this.toolStripMenuItem2.Checked = true;
-			this.toolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
 			this.toolStripMenuItem2.Size = new System.Drawing.Size(276, 22);
 			this.toolStripMenuItem2.Text = "Неинформированный метод поиска";
@@ -744,6 +743,8 @@ namespace Cube_flip
 			// 
 			// toolStripMenuItem3
 			// 
+			this.toolStripMenuItem3.Checked = true;
+			this.toolStripMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
 			this.toolStripMenuItem3.Size = new System.Drawing.Size(276, 22);
 			this.toolStripMenuItem3.Text = "Информированный метод поиска";
@@ -763,7 +764,6 @@ namespace Cube_flip
 			this.groupBox6.TabIndex = 14;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Поиск решения";
-			this.groupBox6.Visible = false;
 			// 
 			// groupBox7
 			// 
@@ -905,13 +905,13 @@ namespace Cube_flip
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ActiveCaption;
 			this.ClientSize = new System.Drawing.Size(1122, 811);
-			this.Controls.Add(this.groupBox9);
-			this.Controls.Add(this.groupBox6);
-			this.Controls.Add(this.groupBox5);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gameField);
 			this.Controls.Add(this.menuStrip);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox5);
+			this.Controls.Add(this.groupBox6);
+			this.Controls.Add(this.groupBox9);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip;

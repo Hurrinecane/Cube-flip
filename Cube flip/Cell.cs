@@ -3,15 +3,15 @@ using static Cube_flip.FlipCubeGame;
 
 namespace Cube_flip
 {
-	internal class FieldCell : IEquatable<FieldCell>
+	internal class Cell : IEquatable<Cell>
 		{
 			private int X;
 			private int Y;
 
 			private BoxSides Side;
-			public FieldCell from = null;
+			public Cell from = null;
 
-			public FieldCell(int currentX, int currentY, BoxSides currentDesiredSide)
+			public Cell(int currentX, int currentY, BoxSides currentDesiredSide)
 			{
 				this.X = currentX;
 				this.Y = currentY;
@@ -33,7 +33,7 @@ namespace Cube_flip
 				get { return Side; }
 			}
 
-			public static bool operator ==(FieldCell A, FieldCell B)
+			public static bool operator ==(Cell A, Cell B)
 			{
 				if (A.X == B.X && A.Y == B.Y && A.Side == B.Side)
 					return true;
@@ -41,7 +41,7 @@ namespace Cube_flip
 				return false;
 			}
 
-			public static bool operator !=(FieldCell A, FieldCell B)
+			public static bool operator !=(Cell A, Cell B)
 			{
 				if (A.X != B.X || A.Y != B.Y || A.Side != B.Side)
 					return true;
@@ -49,7 +49,7 @@ namespace Cube_flip
 				return false;
 			}
 
-			public bool Equals(FieldCell other)
+			public bool Equals(Cell other)
 			{
 				if (this.X == other.X && this.Y == other.Y && this.Side == other.Side) return true;
 				else return false;

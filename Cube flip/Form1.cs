@@ -437,7 +437,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch informedSearch = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.ColoredSide, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			informedSearch.FindWayAlgorithm1();
+			informedSearch.FindWayA1();
 			textBox6.Text = informedSearch.PathOutput();
 		}
 
@@ -459,7 +459,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			artificialIntelligenceSystem.FindWayAlgorithm1();
+			artificialIntelligenceSystem.FindWayA1();
 			textBox6.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();

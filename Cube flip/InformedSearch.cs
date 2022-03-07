@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using static Cube_flip.FlipCubeGame;
 
@@ -8,12 +9,12 @@ namespace Cube_flip
 {
 	partial class InformedSearch
 	{
-		private List<FieldCellInf> Paths1;
-		private List<FieldCellInf> Variants1;
-		private List<FieldCellInf> O2;
-		private List<FieldCellInf> C2;
-		private FieldCellInf startState;
-		private FieldCellInf finalState;
+		private List<CellInf> PathsListA1;
+		private List<CellInf> ProcessedCellsA1;
+		private List<CellInf> O2;
+		private List<CellInf> C2;
+		private CellInf startState;
+		private CellInf finalState;
 
 		List<int[,,]> listMovesInformation;
 		List<int[,]> fieldMapMoves;
@@ -25,12 +26,12 @@ namespace Cube_flip
 
 		public InformedSearch(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
 		{
-			startState = new FieldCellInf(startStatePanelX, startStatePanelY, startStateSide)
+			startState = new CellInf(startStatePanelX, startStatePanelY, startStateSide)
 			{
 				HeuristicValue = 0,
 				Depth = 0
 			};
-			finalState = new FieldCellInf(finalStatePanelX, finalStatePanelY, finalStateSide)
+			finalState = new CellInf(finalStatePanelX, finalStatePanelY, finalStateSide)
 			{
 				HeuristicValue = 0,
 				Depth = 0
@@ -44,65 +45,88 @@ namespace Cube_flip
 
 		#region Algorithm1
 
-		public void FindWayAlgorithm1() //Игнорируем стены и стороны куба
+		public void FindWayA1() //Игнорируем стены и стороны куба
 		{
 			noExit = true;
 
-			Paths1 = new List<FieldCellInf>();
-			Variants1 = new List<FieldCellInf>();
+			PathsListA1 = new List<CellInf>();
+			ProcessedCellsA1 = new List<CellInf>();
 
-			Paths1.Add(startState);
+			PathsListA1.Add(startState);
 
-			while (Paths1.Count > 0)
+			while (PathsListA1.Count > 0)
 			{
-				FieldCellInf temp = GetMinimumValue(Paths1);
-				Paths1.Remove(temp);
+				CellInf temp = GetMinimumValue(PathsListA1);
+				PathsListA1.Remove(temp);
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					Variants1.Add(temp);
+					ProcessedCellsA1.Add(temp);
 					noExit = false;
 					return;
 				}
 
-				foreach (FieldCellInf p in CalcMovesAlgorithm1(temp))
-					if (!Paths1.Contains(p) && !Variants1.Contains(p))              //Если видем клетку в первый раз
-						Paths1.Add(p);                                              //Добавляем ее в пути
-					else if (Paths1.Contains(p))                                    //Если она есть в путях
+				foreach (CellInf p in CalcMoveA1(temp))
+					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))			//Если видем клетку в первый раз
+						PathsListA1.Add(p);													//Добавляем ее в пути
+					else if (PathsListA1.Contains(p))                                       //Если она есть в путях
 					{
-						int index = Paths1.IndexOf(p);
-						FieldCellInf similar = Paths1[index];
+						int index = PathsListA1.IndexOf(p);
+						CellInf similar = PathsListA1[index];
 
-						if (p.Value < similar.Value)                                //Проверяем, оптимальный ли до нее путь
+						if (p.Value < similar.Value)                                        //Проверяем, оптимальный ли до нее путь
 						{
-							Paths1.Remove(similar);                                 //Если да, заменяем
-							Paths1.Add(p);
+							PathsListA1.Remove(similar);                                    //Если да, заменяем
+							PathsListA1.Add(p);
 						}
 					}
-					else if (Variants1.Contains(p))                                 //Если ее нет в путях, но она есть в вариантах
+					else if (ProcessedCellsA1.Contains(p))									//Если ее нет в путях, но она есть среди обработанных ячеек
 					{
-						int index = Variants1.IndexOf(p);
-						FieldCellInf similar = Variants1[index];
+						int index = ProcessedCellsA1.IndexOf(p);
+						CellInf similar = ProcessedCellsA1[index];
 
-						if (p.Value < similar.Value)                                //Проверяем, оптимальный ли до нее путь
+						if (p.Value < similar.Value)                                        //Проверяем, оптимальный ли до нее путь
 						{
-							Variants1.Remove(similar);                              //Если да, убираем ее из вариантов
-							Paths1.Add(p);                                          //И переносим в пути для проверки
+							ProcessedCellsA1.Remove(similar);								//Если да, убираем ее из обработанных ячеек
+							PathsListA1.Add(p);                                             //И переносим в пути
 						}
 					}
 
-				Variants1.Add(temp);                                                //Добавляем клетку в варианты
+				//ProcessedCellsA1.Add(temp);												//Добавляем клетку в обработанные ячейки
+
+
+				if (ProcessedCellsA1.Count < 100)											//Если список вершин не переполнен
+					ProcessedCellsA1.Add(temp);                                             //Добавляем клетку в обработанные ячейки
+				else																		//Иначе находим ячейку с наихудшим значением
+				{
+					var baddest = FindMaxValue(ProcessedCellsA1, x => x.Value);
+					ProcessedCellsA1.Remove(baddest);										//Удаляем ее
+					ProcessedCellsA1.Add(temp);                                             //И добавляем клетку в обработанные ячейки
+				}
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private List<FieldCellInf> CalcMovesAlgorithm1(FieldCellInf currentPosition)
+		public T FindMaxValue<T>(List<T> list, Converter<T, int> projection)
 		{
-			List<FieldCellInf> way = new List<FieldCellInf>();
+			if (list.Count == 0)
+				throw new InvalidOperationException("Empty list");
 
-			FieldCellInf temporaryWay;
+			T cell = list[0];
+			foreach (T item in list)
+				if (projection(item) > projection(cell))
+					cell = item;
+
+			return cell;
+		}
+
+		private List<CellInf> CalcMoveA1(CellInf currentPosition)
+		{
+			List<CellInf> way = new List<CellInf>();
+
+			CellInf temporaryWay;
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
@@ -110,7 +134,7 @@ namespace Cube_flip
 			if (x != 16)                                                                                                        //can go down
 				if (field[x + 1, y] == (int)CellTypes.space || field[x + 1, y] == (int)CellTypes.target)
 				{
-					temporaryWay = new FieldCellInf(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
+					temporaryWay = new CellInf(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -124,7 +148,7 @@ namespace Cube_flip
 			if (x != 0)                                                                                                         //can go up
 				if (field[x - 1, y] == (int)CellTypes.space || field[x - 1, y] == (int)CellTypes.target)
 				{
-					temporaryWay = new FieldCellInf(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
+					temporaryWay = new CellInf(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -137,7 +161,7 @@ namespace Cube_flip
 			if (y != 16)                                                                                                        //can go right
 				if (field[x, y + 1] == (int)CellTypes.space || field[x, y + 1] == (int)CellTypes.target)
 				{
-					temporaryWay = new FieldCellInf(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
+					temporaryWay = new CellInf(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -150,7 +174,7 @@ namespace Cube_flip
 			if (y != 0)                                                                                                         //can go left
 				if (field[x, y - 1] == (int)CellTypes.space || field[x, y - 1] == (int)CellTypes.target)
 				{
-					temporaryWay = new FieldCellInf(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
+					temporaryWay = new CellInf(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -181,16 +205,16 @@ namespace Cube_flip
 
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
-			FindWayAlgorithm1();
+			FindWayA1();
 			stopWatch.Stop();
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(Variants1.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsA1.Count) + Environment.NewLine;
 
-			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(Paths1.Count) + Environment.NewLine;
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(PathsListA1.Count) + Environment.NewLine;
 
 			return statistics;
 		}
@@ -213,28 +237,28 @@ namespace Cube_flip
 			listMovesInformation = new List<int[,,]>();
 			fieldMapMoves = new List<int[,]>();
 
-			Paths1 = new List<FieldCellInf>();
-			Variants1 = new List<FieldCellInf>();
+			PathsListA1 = new List<CellInf>();
+			ProcessedCellsA1 = new List<CellInf>();
 
-			Paths1.Add(startState);
+			PathsListA1.Add(startState);
 
-			while (Paths1.Count > 0)
+			while (PathsListA1.Count > 0)
 			{
-				FieldCellInf temp = GetMinimumValue(Paths1);
-				Paths1.Remove(temp);
+				CellInf temp = GetMinimumValue(PathsListA1);
+				PathsListA1.Remove(temp);
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					Variants1.Add(temp);
+					ProcessedCellsA1.Add(temp);
 					noExit = false;
 					return;
 				}
 
-				foreach (FieldCellInf p in CalcMovesAlgorithm1(temp))
-					if (!Paths1.Contains(p) && !Variants1.Contains(p))
+				foreach (CellInf p in CalcMoveA1(temp))
+					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))
 					{
-						Paths1.Add(p);
+						PathsListA1.Add(p);
 						fieldMapMovesСurrent[p.GetX, p.GetY]++;
 						fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
 						fieldMapMovesСurrentInformation[p.GetX, p.GetY, 1] = p.HeuristicValue;
@@ -256,16 +280,16 @@ namespace Cube_flip
 						listMovesInformation.Add(fieldMapMovesСurrentInformationRecord);
 						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 					}
-					else if (Paths1.Contains(p))
+					else if (PathsListA1.Contains(p))
 					{
-						int index = Paths1.IndexOf(p);
+						int index = PathsListA1.IndexOf(p);
 
-						FieldCellInf similar = Paths1[index];
+						CellInf similar = PathsListA1[index];
 
 						if (p.Value < similar.Value)
 						{
-							Paths1.Remove(similar);
-							Paths1.Add(p);
+							PathsListA1.Remove(similar);
+							PathsListA1.Add(p);
 
 							fieldMapMovesСurrent[p.GetX, p.GetY]++;
 							fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
@@ -289,16 +313,16 @@ namespace Cube_flip
 							fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 						}
 					}
-					else if (Variants1.Contains(p))
+					else if (ProcessedCellsA1.Contains(p))
 					{
-						int index = Variants1.IndexOf(p);
+						int index = ProcessedCellsA1.IndexOf(p);
 
-						FieldCellInf similar = Variants1[index];
+						CellInf similar = ProcessedCellsA1[index];
 
 						if (p.Value < similar.Value)
 						{
-							Variants1.Remove(similar);
-							Paths1.Add(p);
+							ProcessedCellsA1.Remove(similar);
+							PathsListA1.Add(p);
 
 							fieldMapMovesСurrent[p.GetX, p.GetY]++;
 							fieldMapMovesСurrentInformation[p.GetX, p.GetY, 0] = p.Depth;
@@ -323,7 +347,7 @@ namespace Cube_flip
 						}
 					}
 
-				Variants1.Add(temp);
+				ProcessedCellsA1.Add(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -834,11 +858,11 @@ namespace Cube_flip
 			return requiredTurns;
 		}
 
-		private List<FieldCellInf> MovesAlgorithm2(FieldCellInf currentPosition)
+		private List<CellInf> MovesAlgorithm2(CellInf currentPosition)
 		{
-			List<FieldCellInf> way = new List<FieldCellInf>();
+			List<CellInf> way = new List<CellInf>();
 
-			FieldCellInf temporaryWay;
+			CellInf temporaryWay;
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
@@ -846,7 +870,7 @@ namespace Cube_flip
 			if (x != 16)
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
-					temporaryWay = new FieldCellInf(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
+					temporaryWay = new CellInf(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -860,7 +884,7 @@ namespace Cube_flip
 			if (x != 0)
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
-					temporaryWay = new FieldCellInf(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
+					temporaryWay = new CellInf(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -873,7 +897,7 @@ namespace Cube_flip
 			if (y != 16)
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
-					temporaryWay = new FieldCellInf(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
+					temporaryWay = new CellInf(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -886,7 +910,7 @@ namespace Cube_flip
 			if (y != 0)
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
-					temporaryWay = new FieldCellInf(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
+					temporaryWay = new CellInf(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -903,14 +927,14 @@ namespace Cube_flip
 		{
 			noExit = true;
 
-			O2 = new List<FieldCellInf>();
-			C2 = new List<FieldCellInf>();
+			O2 = new List<CellInf>();
+			C2 = new List<CellInf>();
 
 			O2.Add(startState);
 
 			while (O2.Count > 0)
 			{
-				FieldCellInf temp = GetMinimumValue(O2);
+				CellInf temp = GetMinimumValue(O2);
 				O2.Remove(temp);
 
 				if (temp == finalState)
@@ -921,14 +945,14 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCellInf p in MovesAlgorithm2(temp))
+				foreach (CellInf p in MovesAlgorithm2(temp))
 					if (!O2.Contains(p) && !C2.Contains(p))
 						O2.Add(p);
 					else if (O2.Contains(p))
 					{
 						int index = O2.IndexOf(p);
 
-						FieldCellInf similar = O2[index];
+						CellInf similar = O2[index];
 
 						if (p.Value < similar.Value)
 						{
@@ -940,7 +964,7 @@ namespace Cube_flip
 					{
 						int index = C2.IndexOf(p);
 
-						FieldCellInf similar = C2[index];
+						CellInf similar = C2[index];
 
 						if (p.Value < similar.Value)
 						{
@@ -993,14 +1017,14 @@ namespace Cube_flip
 			listMovesInformation = new List<int[,,]>();
 			fieldMapMoves = new List<int[,]>();
 
-			O2 = new List<FieldCellInf>();
-			C2 = new List<FieldCellInf>();
+			O2 = new List<CellInf>();
+			C2 = new List<CellInf>();
 
 			O2.Add(startState);
 
 			while (O2.Count > 0)
 			{
-				FieldCellInf temp = GetMinimumValue(O2);
+				CellInf temp = GetMinimumValue(O2);
 				O2.Remove(temp);
 
 				if (temp == finalState)
@@ -1011,7 +1035,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCellInf p in MovesAlgorithm2(temp))
+				foreach (CellInf p in MovesAlgorithm2(temp))
 					if (!O2.Contains(p) && !C2.Contains(p))
 					{
 						O2.Add(p);
@@ -1040,7 +1064,7 @@ namespace Cube_flip
 					{
 						int index = O2.IndexOf(p);
 
-						FieldCellInf similar = O2[index];
+						CellInf similar = O2[index];
 
 						if (p.Value < similar.Value)
 						{
@@ -1073,7 +1097,7 @@ namespace Cube_flip
 					{
 						int index = C2.IndexOf(p);
 
-						FieldCellInf similar = C2[index];
+						CellInf similar = C2[index];
 
 						if (p.Value < similar.Value)
 						{
@@ -1128,9 +1152,9 @@ namespace Cube_flip
 			return (Math.Abs(startX - finalX) + Math.Abs(startY - finalY));
 		}
 
-		private FieldCellInf GetMinimumValue(List<FieldCellInf> O1)
+		private CellInf GetMinimumValue(List<CellInf> O1)
 		{
-			FieldCellInf result = O1[0];
+			CellInf result = O1[0];
 
 			for (int i = 0; i < O1.Count - 1; i++)
 				if (O1[i] < result)
@@ -1144,8 +1168,8 @@ namespace Cube_flip
 			if (noExit)
 				return "К выбранной цели нет пути!";
 
-			Stack<FieldCellInf> way = new Stack<FieldCellInf>();
-			FieldCellInf temp = finalState;
+			Stack<CellInf> way = new Stack<CellInf>();
+			CellInf temp = finalState;
 
 			while (temp != startState)
 			{
@@ -1169,9 +1193,9 @@ namespace Cube_flip
 
 		public Queue<int> GetWayPanel()
 		{
-			Stack<FieldCellInf> way = new Stack<FieldCellInf>();
+			Stack<CellInf> way = new Stack<CellInf>();
 			Queue<int> pathPanel = new Queue<int>();
-			FieldCellInf temp = finalState;
+			CellInf temp = finalState;
 
 			if (noExit)
 				return pathPanel;
@@ -1195,9 +1219,9 @@ namespace Cube_flip
 
 		public Queue<BoxSides> GetWayColorSide()
 		{
-			Stack<FieldCellInf> way = new Stack<FieldCellInf>();
+			Stack<CellInf> way = new Stack<CellInf>();
 			Queue<BoxSides> pathPanel = new Queue<BoxSides>();
-			FieldCellInf temp = finalState;
+			CellInf temp = finalState;
 
 			if (noExit)
 				return pathPanel;

@@ -8,7 +8,7 @@
 		private int startY;
 		private int finishX;
 		private int finishY;
-		private BoxSides winSide;
+		private BoxSides clrSide;
 
 		public enum CellTypes
 		{
@@ -44,7 +44,7 @@
 			this.startY = startY;
 			this.finishX = finishX;
 			this.finishY = finishY;
-			this.winSide = currentDesiredColorSide;
+			this.clrSide = currentDesiredColorSide;
 			currentX = startX;
 			currentY = startY;
 		}
@@ -87,13 +87,13 @@
 
 		public BoxSides ColoredSide
 		{
-			get { return winSide; }
-			set { winSide = value; }
+			get { return clrSide; }
+			set { clrSide = value; }
 		}
 
 		public void ChangeCurrentColor(FlipDirection flipDir)
 		{
-			winSide = CalcClrSideFlip(flipDir, winSide);
+			clrSide = CalcClrSideFlip(flipDir, clrSide);
 		}
 
 		public static BoxSides CalcClrSideFlip(FlipDirection flipDir, BoxSides currentClrSide)

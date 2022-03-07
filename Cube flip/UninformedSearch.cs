@@ -8,12 +8,12 @@ namespace Cube_flip
 {
 	partial class UninformedSearch
 	{
-		private Queue<FieldCell> OW;
-		private Stack<FieldCell> OD;
-		private Queue<FieldCell> CW;
-		private Queue<FieldCell> CD;
-		private FieldCell startState;
-		private FieldCell finalState;
+		private Queue<Cell> OW;
+		private Stack<Cell> OD;
+		private Queue<Cell> CW;
+		private Queue<Cell> CD;
+		private Cell startState;
+		private Cell finalState;
 
 		private int fieldSize;
 		private int[,] field;
@@ -24,8 +24,8 @@ namespace Cube_flip
 
 		public UninformedSearch(int startStatePanelX, int startStatePanelY, BoxSides startStateSide, int finalStatePanelX, int finalStatePanelY, BoxSides finalStateSide, int[,] field, int fieldSize)
 		{
-			startState = new FieldCell(startStatePanelX, startStatePanelY, startStateSide);
-			finalState = new FieldCell(finalStatePanelX, finalStatePanelY, finalStateSide);
+			startState = new Cell(startStatePanelX, startStatePanelY, startStateSide);
+			finalState = new Cell(finalStatePanelX, finalStatePanelY, finalStateSide);
 
 			this.fieldSize = fieldSize;
 
@@ -37,14 +37,14 @@ namespace Cube_flip
 		{
 			noExit = true;
 
-			OW = new Queue<FieldCell>();
-			CW = new Queue<FieldCell>();
+			OW = new Queue<Cell>();
+			CW = new Queue<Cell>();
 
 			OW.Enqueue(startState);
 
 			while (OW.Count > 0)
 			{
-				FieldCell temp = OW.Dequeue();
+				Cell temp = OW.Dequeue();
 
 				if (temp == finalState)
 				{
@@ -54,7 +54,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))
+				foreach (Cell p in Moves(temp))
 					if (!CW.Contains(p) && !OW.Contains(p))
 					{
 						OW.Enqueue(p);
@@ -70,14 +70,14 @@ namespace Cube_flip
 		{
 			noExit = true;
 
-			OD = new Stack<FieldCell>();
-			CD = new Queue<FieldCell>();
+			OD = new Stack<Cell>();
+			CD = new Queue<Cell>();
 
 			OD.Push(startState);
 
 			while (OD.Count > 0)
 			{
-				FieldCell temp = OD.Pop();
+				Cell temp = OD.Pop();
 
 				if (temp == finalState)
 				{
@@ -87,7 +87,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))
+				foreach (Cell p in Moves(temp))
 					if (!CD.Contains(p) && !OD.Contains(p))					
 						OD.Push(p);
 									
@@ -97,11 +97,11 @@ namespace Cube_flip
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private Queue<FieldCell> Moves(FieldCell currentPosition)
+		private Queue<Cell> Moves(Cell currentPosition)
 		{
-			Queue<FieldCell> way = new Queue<FieldCell>();
+			Queue<Cell> way = new Queue<Cell>();
 
-			FieldCell temporaryWay;
+			Cell temporaryWay;
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
@@ -109,7 +109,7 @@ namespace Cube_flip
 			if (x != 16)			
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
+					temporaryWay = new Cell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -120,7 +120,7 @@ namespace Cube_flip
 			if (x != 0)			
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
-					temporaryWay = new FieldCell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
+					temporaryWay = new Cell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -130,7 +130,7 @@ namespace Cube_flip
 			if (y != 16)			
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
+					temporaryWay = new Cell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -140,7 +140,7 @@ namespace Cube_flip
 			if (y != 0)			
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
-					temporaryWay = new FieldCell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
+					temporaryWay = new Cell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
 					{
 						from = currentPosition
 					};
@@ -155,8 +155,8 @@ namespace Cube_flip
 			if (noExit)
 				return "К выбранной цели нет пути!";
 
-			Stack<FieldCell> way = new Stack<FieldCell>();
-			FieldCell temp = finalState;
+			Stack<Cell> way = new Stack<Cell>();
+			Cell temp = finalState;
 
 			while (temp != startState)
 			{
@@ -179,9 +179,9 @@ namespace Cube_flip
 
 		public Queue<int> GetWayPanel()
 		{
-			Stack<FieldCell> way = new Stack<FieldCell>();
+			Stack<Cell> way = new Stack<Cell>();
 			Queue<int> pathPanel = new Queue<int>();
-			FieldCell temp = finalState;
+			Cell temp = finalState;
 
 			if (noExit)
 				return pathPanel;
@@ -205,9 +205,9 @@ namespace Cube_flip
 
 		public Queue<BoxSides> GetWayColorSide()
 		{
-			Stack<FieldCell> way = new Stack<FieldCell>();
+			Stack<Cell> way = new Stack<Cell>();
 			Queue<BoxSides> pathPanel = new Queue<BoxSides>();
-			FieldCell temp = finalState;
+			Cell temp = finalState;
 
 			if (noExit)
 				return pathPanel;
@@ -279,14 +279,14 @@ namespace Cube_flip
 
 			fieldMapMoves = new List<int[,]>();
 
-			OW = new Queue<FieldCell>();
-			CW = new Queue<FieldCell>();
+			OW = new Queue<Cell>();
+			CW = new Queue<Cell>();
 
 			OW.Enqueue(startState);
 
 			while (OW.Count > 0)
 			{
-				FieldCell temp = OW.Dequeue();
+				Cell temp = OW.Dequeue();
 
 				if (temp == finalState)
 				{
@@ -296,7 +296,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))
+				foreach (Cell p in Moves(temp))
 					if (!CW.Contains(p) && !OW.Contains(p))
 					{
 						OW.Enqueue(p);
@@ -329,14 +329,14 @@ namespace Cube_flip
 
 			fieldMapMoves = new List<int[,]>();
 
-			OD = new Stack<FieldCell>();
-			CD = new Queue<FieldCell>();
+			OD = new Stack<Cell>();
+			CD = new Queue<Cell>();
 
 			OD.Push(startState);
 
 			while (OD.Count > 0)
 			{
-				FieldCell temp = OD.Pop();
+				Cell temp = OD.Pop();
 
 				if (temp == finalState)
 				{
@@ -346,7 +346,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (FieldCell p in Moves(temp))
+				foreach (Cell p in Moves(temp))
 					if (!CD.Contains(p) && !OD.Contains(p))
 					{
 						OD.Push(p);
