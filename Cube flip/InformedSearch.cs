@@ -95,31 +95,16 @@ namespace Cube_flip
 
 				//ProcessedCellsA1.Add(temp);												//Добавляем клетку в обработанные ячейки
 
-
 				if (ProcessedCellsA1.Count < 100)											//Если список вершин не переполнен
 					ProcessedCellsA1.Add(temp);                                             //Добавляем клетку в обработанные ячейки
-				else																		//Иначе находим ячейку с наихудшим значением
+				else																		
 				{
-					var baddest = FindMaxValue(ProcessedCellsA1, x => x.Value);
-					ProcessedCellsA1.Remove(baddest);										//Удаляем ее
+					ProcessedCellsA1.Remove(FindMaxValue(ProcessedCellsA1, x => x.Value));  // Иначе находим ячейку с наихудшим значением, удаляем ее
 					ProcessedCellsA1.Add(temp);                                             //И добавляем клетку в обработанные ячейки
 				}
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		}
-
-		public T FindMaxValue<T>(List<T> list, Converter<T, int> projection)
-		{
-			if (list.Count == 0)
-				throw new InvalidOperationException("Empty list");
-
-			T cell = list[0];
-			foreach (T item in list)
-				if (projection(item) > projection(cell))
-					cell = item;
-
-			return cell;
 		}
 
 		private List<CellInf> CalcMoveA1(CellInf currentPosition)
@@ -1241,5 +1226,19 @@ namespace Cube_flip
 
 			return pathPanel;
 		}
+
+		public T FindMaxValue<T>(List<T> list, Converter<T, int> projection)
+		{
+			if (list.Count == 0)
+				throw new InvalidOperationException("Empty list");
+
+			T cell = list[0];
+			foreach (T item in list)
+				if (projection(item) > projection(cell))
+					cell = item;
+
+			return cell;
+		}
+
 	}
 }
