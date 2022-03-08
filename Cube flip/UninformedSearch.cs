@@ -8,10 +8,10 @@ namespace Cube_flip
 {
 	partial class UninformedSearch
 	{
-		private Queue<Cell> OW;
-		private Stack<Cell> OD;
-		private Queue<Cell> CW;
-		private Queue<Cell> CD;
+		private Queue<Cell> PathsListW;
+		private Stack<Cell> PathsListD;
+		private Queue<Cell> ProcessedCellsW;
+		private Queue<Cell> ProcessedCellsD;
 		private Cell startState;
 		private Cell finalState;
 
@@ -37,30 +37,29 @@ namespace Cube_flip
 		{
 			noExit = true;
 
-			OW = new Queue<Cell>();
-			CW = new Queue<Cell>();
+			PathsListW = new Queue<Cell>();
+			ProcessedCellsW = new Queue<Cell>();
 
-			OW.Enqueue(startState);
+			PathsListW.Enqueue(startState);
 
-			while (OW.Count > 0)
+			while (PathsListW.Count > 0)
 			{
-				Cell temp = OW.Dequeue();
+				Cell temp = PathsListW.Dequeue();
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					CW.Enqueue(temp);
+					ProcessedCellsW.Enqueue(temp);
 					noExit = false;
 					return;
 				}
 
 				foreach (Cell p in Moves(temp))
-					if (!CW.Contains(p) && !OW.Contains(p))
-					{
-						OW.Enqueue(p);
-					}
+					if (!ProcessedCellsW.Contains(p) && !PathsListW.Contains(p))
+						PathsListW.Enqueue(p);
 
-				CW.Enqueue(temp);
+
+				ProcessedCellsW.Enqueue(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -70,28 +69,28 @@ namespace Cube_flip
 		{
 			noExit = true;
 
-			OD = new Stack<Cell>();
-			CD = new Queue<Cell>();
+			PathsListD = new Stack<Cell>();
+			ProcessedCellsD = new Queue<Cell>();
 
-			OD.Push(startState);
+			PathsListD.Push(startState);
 
-			while (OD.Count > 0)
+			while (PathsListD.Count > 0)
 			{
-				Cell temp = OD.Pop();
+				Cell temp = PathsListD.Pop();
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					CD.Enqueue(temp);
+					ProcessedCellsD.Enqueue(temp);
 					noExit = false;
 					return;
 				}
 
 				foreach (Cell p in Moves(temp))
-					if (!CD.Contains(p) && !OD.Contains(p))					
-						OD.Push(p);
-									
-				CD.Enqueue(temp);
+					if (!ProcessedCellsD.Contains(p) && !PathsListD.Contains(p))
+						PathsListD.Push(p);
+
+				ProcessedCellsD.Enqueue(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -106,7 +105,7 @@ namespace Cube_flip
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
 
-			if (x != 16)			
+			if (x != 16)
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
 					temporaryWay = new Cell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
@@ -115,9 +114,9 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay);
 				}
-			
 
-			if (x != 0)			
+
+			if (x != 0)
 				if (field[x - 1, y] == 1 || field[x - 1, y] == 3)
 				{
 					temporaryWay = new Cell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
@@ -125,9 +124,9 @@ namespace Cube_flip
 						from = currentPosition
 					};
 					way.Enqueue(temporaryWay);
-				}			
+				}
 
-			if (y != 16)			
+			if (y != 16)
 				if (field[x, y + 1] == 1 || field[x, y + 1] == 3)
 				{
 					temporaryWay = new Cell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
@@ -136,8 +135,8 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay);
 				}
-			
-			if (y != 0)			
+
+			if (y != 0)
 				if (field[x, y - 1] == 1 || field[x, y - 1] == 3)
 				{
 					temporaryWay = new Cell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
@@ -146,7 +145,7 @@ namespace Cube_flip
 					};
 					way.Enqueue(temporaryWay);
 				}
-			
+
 			return way;
 		}
 
@@ -241,9 +240,9 @@ namespace Cube_flip
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(CW.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsW.Count) + Environment.NewLine;
 
-			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(OW.Count) + Environment.NewLine;
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(PathsListW.Count) + Environment.NewLine;
 
 			return statistics;
 		}
@@ -261,9 +260,9 @@ namespace Cube_flip
 			Queue<int> pathPanel = GetWayPanel();
 			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
 
-			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(CD.Count) + Environment.NewLine;
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsD.Count) + Environment.NewLine;
 
-			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(OD.Count) + Environment.NewLine;
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(PathsListD.Count) + Environment.NewLine;
 
 			return statistics;
 		}
@@ -279,27 +278,27 @@ namespace Cube_flip
 
 			fieldMapMoves = new List<int[,]>();
 
-			OW = new Queue<Cell>();
-			CW = new Queue<Cell>();
+			PathsListW = new Queue<Cell>();
+			ProcessedCellsW = new Queue<Cell>();
 
-			OW.Enqueue(startState);
+			PathsListW.Enqueue(startState);
 
-			while (OW.Count > 0)
+			while (PathsListW.Count > 0)
 			{
-				Cell temp = OW.Dequeue();
+				Cell temp = PathsListW.Dequeue();
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					CW.Enqueue(temp);
+					ProcessedCellsW.Enqueue(temp);
 					noExit = false;
 					return;
 				}
 
 				foreach (Cell p in Moves(temp))
-					if (!CW.Contains(p) && !OW.Contains(p))
+					if (!ProcessedCellsW.Contains(p) && !PathsListW.Contains(p))
 					{
-						OW.Enqueue(p);
+						PathsListW.Enqueue(p);
 						fieldMapMovesСurrent[p.GetX, p.GetY]++;
 
 						int[,] fieldMapMovesСurrentRecord = new int[this.fieldSize, this.fieldSize];
@@ -312,7 +311,7 @@ namespace Cube_flip
 						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 					}
 
-				CW.Enqueue(temp);
+				ProcessedCellsW.Enqueue(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -329,27 +328,27 @@ namespace Cube_flip
 
 			fieldMapMoves = new List<int[,]>();
 
-			OD = new Stack<Cell>();
-			CD = new Queue<Cell>();
+			PathsListD = new Stack<Cell>();
+			ProcessedCellsD = new Queue<Cell>();
 
-			OD.Push(startState);
+			PathsListD.Push(startState);
 
-			while (OD.Count > 0)
+			while (PathsListD.Count > 0)
 			{
-				Cell temp = OD.Pop();
+				Cell temp = PathsListD.Pop();
 
 				if (temp == finalState)
 				{
 					finalState.from = temp.from;
-					CD.Enqueue(temp);
+					ProcessedCellsD.Enqueue(temp);
 					noExit = false;
 					return;
 				}
 
 				foreach (Cell p in Moves(temp))
-					if (!CD.Contains(p) && !OD.Contains(p))
+					if (!ProcessedCellsD.Contains(p) && !PathsListD.Contains(p))
 					{
-						OD.Push(p);
+						PathsListD.Push(p);
 						fieldMapMovesСurrent[p.GetX, p.GetY]++;
 
 						int[,] fieldMapMovesСurrentRecord = new int[this.fieldSize, this.fieldSize];
@@ -362,7 +361,7 @@ namespace Cube_flip
 						fieldMapMoves.Add(fieldMapMovesСurrentRecord);
 					}
 
-				CD.Enqueue(temp);
+				ProcessedCellsD.Enqueue(temp);
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -377,7 +376,7 @@ namespace Cube_flip
 		public List<int[,]> GetMapMovesDepth()
 		{
 			FindingMovesWayDepth();
-			return  fieldMapMoves;
+			return fieldMapMoves;
 		}
 	}
 }

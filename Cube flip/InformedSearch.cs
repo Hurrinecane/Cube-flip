@@ -68,8 +68,8 @@ namespace Cube_flip
 				}
 
 				foreach (CellInf p in CalcMoveA1(temp))
-					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))			//Если видем клетку в первый раз
-						PathsListA1.Add(p);													//Добавляем ее в пути
+					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))          //Если видем клетку в первый раз
+						PathsListA1.Add(p);                                                 //Добавляем ее в пути
 					else if (PathsListA1.Contains(p))                                       //Если она есть в путях
 					{
 						int index = PathsListA1.IndexOf(p);
@@ -81,45 +81,30 @@ namespace Cube_flip
 							PathsListA1.Add(p);
 						}
 					}
-					else if (ProcessedCellsA1.Contains(p))									//Если ее нет в путях, но она есть среди обработанных ячеек
+					else if (ProcessedCellsA1.Contains(p))                                  //Если ее нет в путях, но она есть среди обработанных ячеек
 					{
 						int index = ProcessedCellsA1.IndexOf(p);
 						CellInf similar = ProcessedCellsA1[index];
 
 						if (p.Value < similar.Value)                                        //Проверяем, оптимальный ли до нее путь
 						{
-							ProcessedCellsA1.Remove(similar);								//Если да, убираем ее из обработанных ячеек
+							ProcessedCellsA1.Remove(similar);                               //Если да, убираем ее из обработанных ячеек
 							PathsListA1.Add(p);                                             //И переносим в пути
 						}
 					}
 
 				//ProcessedCellsA1.Add(temp);												//Добавляем клетку в обработанные ячейки
 
-
-				if (ProcessedCellsA1.Count < 100)											//Если список вершин не переполнен
+				if (ProcessedCellsA1.Count < 100)                                           //Если список вершин не переполнен
 					ProcessedCellsA1.Add(temp);                                             //Добавляем клетку в обработанные ячейки
-				else																		//Иначе находим ячейку с наихудшим значением
+				else
 				{
-					var baddest = FindMaxValue(ProcessedCellsA1, x => x.Value);
-					ProcessedCellsA1.Remove(baddest);										//Удаляем ее
+					ProcessedCellsA1.Remove(FindMaxValue(ProcessedCellsA1, x => x.Value));  // Иначе находим ячейку с наихудшим значением, удаляем ее
 					ProcessedCellsA1.Add(temp);                                             //И добавляем клетку в обработанные ячейки
 				}
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		}
-
-		public T FindMaxValue<T>(List<T> list, Converter<T, int> projection)
-		{
-			if (list.Count == 0)
-				throw new InvalidOperationException("Empty list");
-
-			T cell = list[0];
-			foreach (T item in list)
-				if (projection(item) > projection(cell))
-					cell = item;
-
-			return cell;
 		}
 
 		private List<CellInf> CalcMoveA1(CellInf currentPosition)
@@ -199,27 +184,7 @@ namespace Cube_flip
 			return fieldMapMoves;
 		}
 
-		public string GetStatisticsAlgorithm1()
-		{
-			string statistics = "";
-
-			Stopwatch stopWatch = new Stopwatch();
-			stopWatch.Start();
-			FindWayA1();
-			stopWatch.Stop();
-			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
-
-			Queue<int> pathPanel = GetWayPanel();
-			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
-
-			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsA1.Count) + Environment.NewLine;
-
-			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(PathsListA1.Count) + Environment.NewLine;
-
-			return statistics;
-		}
-
-		public void FindingMovesWayAlgorithm1()
+		private void FindingMovesWayAlgorithm1()
 		{
 			noExit = true;
 
@@ -351,6 +316,26 @@ namespace Cube_flip
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		public string GetStatisticsAlgorithm1()
+		{
+			string statistics = "";
+
+			Stopwatch stopWatch = new Stopwatch();
+			stopWatch.Start();
+			FindWayA1();
+			stopWatch.Stop();
+			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
+
+			Queue<int> pathPanel = GetWayPanel();
+			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
+
+			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsA1.Count) + Environment.NewLine;
+
+			statistics += "Количество путей на рассмотрение (O): " + Convert.ToString(PathsListA1.Count) + Environment.NewLine;
+
+			return statistics;
 		}
 
 
@@ -999,7 +984,7 @@ namespace Cube_flip
 			return statistics;
 		}
 
-		public void FindingMovesWayAlgorithm2()
+		private void FindingMovesWayAlgorithm2()
 		{
 			noExit = true;
 
@@ -1241,5 +1226,19 @@ namespace Cube_flip
 
 			return pathPanel;
 		}
+
+		public T FindMaxValue<T>(List<T> list, Converter<T, int> projection)
+		{
+			if (list.Count == 0)
+				throw new InvalidOperationException("Empty list");
+
+			T cell = list[0];
+			foreach (T item in list)
+				if (projection(item) > projection(cell))
+					cell = item;
+
+			return cell;
+		}
+
 	}
 }
