@@ -280,6 +280,7 @@ namespace Cube_flip
 			this.domainUpDownLevelSelection.Items.Add("Level 3");
 			this.domainUpDownLevelSelection.Items.Add("Level 2");
 			this.domainUpDownLevelSelection.Items.Add("Level 1");
+			this.domainUpDownLevelSelection.Items.Add("Level 0");
 			this.domainUpDownLevelSelection.Location = new System.Drawing.Point(350, 30);
 			this.domainUpDownLevelSelection.Name = "domainUpDownLevelSelection";
 			this.domainUpDownLevelSelection.ReadOnly = true;

@@ -548,7 +548,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			artificialIntelligenceSystem.FindingWayAlgorithm2();
+			artificialIntelligenceSystem.FindingWayA2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 		}
 
@@ -571,7 +571,7 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			artificialIntelligenceSystem.FindingWayAlgorithm2();
+			artificialIntelligenceSystem.FindingWayA2();
 			textBox5.Text = artificialIntelligenceSystem.PathOutput();
 
 			Queue<int> pathPanel = artificialIntelligenceSystem.GetWayPanel();
@@ -628,8 +628,8 @@ namespace Cube_flip
 			fieldTemp[flipCubeGame.FinishX, flipCubeGame.FinishY] = 3;
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
-			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesAlgorithm2();
-			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationAlgorithm2();
+			List<int[,]> listMoves = artificialIntelligenceSystem.GetMapMovesA2();
+			List<int[,,]> listMovesInformation = artificialIntelligenceSystem.GetMapMovesInformationA2();
 
 			AlgorithmMoveMap algorithmMoveMap = new AlgorithmMoveMap(listMoves, flipCubeGame.CurrentX, flipCubeGame.CurrentY, flipCubeGame.FinishX, flipCubeGame.FinishY, listMovesInformation);
 			algorithmMoveMap.Show();
@@ -865,7 +865,7 @@ namespace Cube_flip
 
 			InformedSearch artificialIntelligenceSystem = new InformedSearch(flipCubeGame.CurrentX, flipCubeGame.CurrentY, current, flipCubeGame.FinishX, flipCubeGame.FinishY, BoxSides.bottom, fieldTemp, fieldSize);
 			textBox8.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm1();
-			textBox7.Text = artificialIntelligenceSystem.GetStatisticsAlgorithm2();
+			textBox7.Text = artificialIntelligenceSystem.GetStatisticsA2();
 		}
 
 		private void ReadArrayFromFile()
@@ -874,7 +874,9 @@ namespace Cube_flip
 			{
 				string[] lines;
 
-				if (domainUpDownLevelSelection.Text == "Level 1")
+				if (domainUpDownLevelSelection.Text == "Level 0")
+					lines = File.ReadAllLines("Level_0.txt");
+				else if(domainUpDownLevelSelection.Text == "Level 1")
 					lines = File.ReadAllLines("Level_1.txt");
 				else if (domainUpDownLevelSelection.Text == "Level 2")
 					lines = File.ReadAllLines("Level_2.txt");

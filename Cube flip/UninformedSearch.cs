@@ -15,8 +15,11 @@ namespace Cube_flip
 		private Cell startState;
 		private Cell finalState;
 
+		private int tmp;
 		private int fieldSize;
 		private int[,] field;
+		private int[] branchingFactor;
+		private int maxDepth = 0;
 
 		List<int[,]> fieldMapMoves;
 
@@ -31,6 +34,8 @@ namespace Cube_flip
 
 			this.field = new int[this.fieldSize, this.fieldSize];
 			this.field = field;
+			branchingFactor = new int[10000];
+
 		}
 
 		public void FindingWayWidth()
@@ -54,7 +59,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (Cell p in Moves(temp))
+				foreach (Cell p in FindMoves(temp))
 					if (!ProcessedCellsW.Contains(p) && !PathsListW.Contains(p))
 						PathsListW.Enqueue(p);
 
@@ -76,6 +81,7 @@ namespace Cube_flip
 
 			while (PathsListD.Count > 0)
 			{
+				tmp++;
 				Cell temp = PathsListD.Pop();
 
 				if (temp == finalState)
@@ -86,7 +92,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (Cell p in Moves(temp))
+				foreach (Cell p in FindMoves(temp))
 					if (!ProcessedCellsD.Contains(p) && !PathsListD.Contains(p))
 						PathsListD.Push(p);
 
@@ -96,7 +102,7 @@ namespace Cube_flip
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private Queue<Cell> Moves(Cell currentPosition)
+		private Queue<Cell> FindMoves(Cell currentPosition)
 		{
 			Queue<Cell> way = new Queue<Cell>();
 
@@ -104,14 +110,22 @@ namespace Cube_flip
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
+			int depth = currentPosition.Depth;
+
 
 			if (x != 16)
 				if (field[x + 1, y] == 1 || field[x + 1, y] == 3)
 				{
 					temporaryWay = new Cell(x + 1, y, CalcClrSideFlip(FlipDirection.down, currentPosition.GetSide))
 					{
-						from = currentPosition
+
+						from = currentPosition,
+						Depth = depth + 1
 					};
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
+
 					way.Enqueue(temporaryWay);
 				}
 
@@ -121,8 +135,12 @@ namespace Cube_flip
 				{
 					temporaryWay = new Cell(x - 1, y, CalcClrSideFlip(FlipDirection.up, currentPosition.GetSide))
 					{
-						from = currentPosition
+						from = currentPosition,
+						Depth = depth + 1
 					};
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Enqueue(temporaryWay);
 				}
 
@@ -131,8 +149,13 @@ namespace Cube_flip
 				{
 					temporaryWay = new Cell(x, y + 1, CalcClrSideFlip(FlipDirection.right, currentPosition.GetSide))
 					{
-						from = currentPosition
+
+						from = currentPosition,
+						Depth = depth + 1
 					};
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Enqueue(temporaryWay);
 				}
 
@@ -141,8 +164,13 @@ namespace Cube_flip
 				{
 					temporaryWay = new Cell(x, y - 1, CalcClrSideFlip(FlipDirection.left, currentPosition.GetSide))
 					{
-						from = currentPosition
+
+						from = currentPosition,
+						Depth = depth + 1
 					};
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Enqueue(temporaryWay);
 				}
 
@@ -230,6 +258,7 @@ namespace Cube_flip
 		public string GetStatisticsWidth()
 		{
 			string statistics = "";
+			maxDepth = 0;
 
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
@@ -238,7 +267,7 @@ namespace Cube_flip
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
-			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
+			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + "	Максимальная глубина: " + Convert.ToString(maxDepth) + Environment.NewLine;
 
 			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsW.Count) + Environment.NewLine;
 
@@ -250,15 +279,17 @@ namespace Cube_flip
 		public string GetStatisticsDepth()
 		{
 			string statistics = "";
+			maxDepth = 0;
+			tmp = 0;
 
-			Stopwatch stopWatch = new Stopwatch();
+		   Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
 			FindingWayDepth();
 			stopWatch.Stop();
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
-			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
+			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + "	Максимальная глубина: " + Convert.ToString(maxDepth) + Environment.NewLine;
 
 			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsD.Count) + Environment.NewLine;
 
@@ -295,7 +326,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (Cell p in Moves(temp))
+				foreach (Cell p in FindMoves(temp))
 					if (!ProcessedCellsW.Contains(p) && !PathsListW.Contains(p))
 					{
 						PathsListW.Enqueue(p);
@@ -345,7 +376,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (Cell p in Moves(temp))
+				foreach (Cell p in FindMoves(temp))
 					if (!ProcessedCellsD.Contains(p) && !PathsListD.Contains(p))
 					{
 						PathsListD.Push(p);

@@ -21,6 +21,8 @@ namespace Cube_flip
 
 		private int fieldSize;
 		private int[,] field;
+		private int[] branchingFactor;
+		private int maxDepth;
 
 		private bool noExit = true;
 
@@ -41,12 +43,13 @@ namespace Cube_flip
 
 			this.field = new int[this.fieldSize, this.fieldSize];
 			this.field = field;
+			branchingFactor = new int[10000];
 		}
 
 		#region Algorithm1
 
 		public void FindWayA1() //Игнорируем стены и стороны куба
-		{
+		{   //рассчитать эффективный коэффициент ветвления для поиска с эвристикой и поиска в ширину
 			noExit = true;
 
 			PathsListA1 = new List<CellInf>();
@@ -67,7 +70,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (CellInf p in CalcMoveA1(temp))
+				foreach (CellInf p in CalcMovesA1(temp))
 					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))          //Если видем клетку в первый раз
 						PathsListA1.Add(p);                                                 //Добавляем ее в пути
 					else if (PathsListA1.Contains(p))                                       //Если она есть в путях
@@ -93,21 +96,21 @@ namespace Cube_flip
 						}
 					}
 
-				//ProcessedCellsA1.Add(temp);												//Добавляем клетку в обработанные ячейки
+				ProcessedCellsA1.Add(temp);                                                 //Добавляем клетку в обработанные ячейки
 
-				if (ProcessedCellsA1.Count < 100)                                           //Если список вершин не переполнен
-					ProcessedCellsA1.Add(temp);                                             //Добавляем клетку в обработанные ячейки
-				else
-				{
-					ProcessedCellsA1.Remove(FindMaxValue(ProcessedCellsA1, x => x.Value));  // Иначе находим ячейку с наихудшим значением, удаляем ее
-					ProcessedCellsA1.Add(temp);                                             //И добавляем клетку в обработанные ячейки
-				}
+				//if (ProcessedCellsA1.Count < 100)                                           //Если список вершин не переполнен
+				ProcessedCellsA1.Add(temp);                                             //Добавляем клетку в обработанные ячейки
+																						//else
+																						//{
+																						//	ProcessedCellsA1.Remove(FindMaxValue(ProcessedCellsA1, x => x.Value));  // Иначе находим ячейку с наихудшим значением, удаляем ее
+																						//	ProcessedCellsA1.Add(temp);                                             //И добавляем клетку в обработанные ячейки
+																						//}
 			}
 
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private List<CellInf> CalcMoveA1(CellInf currentPosition)
+		private List<CellInf> CalcMovesA1(CellInf currentPosition)
 		{
 			List<CellInf> way = new List<CellInf>();
 
@@ -115,6 +118,7 @@ namespace Cube_flip
 
 			int x = currentPosition.GetX;
 			int y = currentPosition.GetY;
+			int depth = currentPosition.Depth;
 
 			if (x != 16)                                                                                                        //can go down
 				if (field[x + 1, y] == (int)CellTypes.space || field[x + 1, y] == (int)CellTypes.target)
@@ -125,7 +129,11 @@ namespace Cube_flip
 					};
 					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
 					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
+					temporaryWay.Depth = depth + 1;
+
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Add(temporaryWay);
 				}
 
@@ -139,7 +147,11 @@ namespace Cube_flip
 					};
 					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
 					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
+					temporaryWay.Depth = depth + 1;
+
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Add(temporaryWay);
 				}
 
@@ -152,7 +164,11 @@ namespace Cube_flip
 					};
 					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
 					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
+					temporaryWay.Depth = depth + 1;
+
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Add(temporaryWay);
 				}
 
@@ -165,7 +181,11 @@ namespace Cube_flip
 					};
 					int h = GetHeuristicValueAlgorithm1(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY);
 					temporaryWay.HeuristicValue = h;
-					temporaryWay.Depth = currentPosition.Depth + 1;
+					temporaryWay.Depth = depth + 1;
+
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+					branchingFactor[temporaryWay.Depth]++;
+
 					way.Add(temporaryWay);
 				}
 
@@ -220,7 +240,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (CellInf p in CalcMoveA1(temp))
+				foreach (CellInf p in CalcMovesA1(temp))
 					if (!PathsListA1.Contains(p) && !ProcessedCellsA1.Contains(p))
 					{
 						PathsListA1.Add(p);
@@ -321,6 +341,7 @@ namespace Cube_flip
 		public string GetStatisticsAlgorithm1()
 		{
 			string statistics = "";
+			maxDepth = 0;
 
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
@@ -329,7 +350,7 @@ namespace Cube_flip
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
-			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
+			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + "	Максимальная глубина: " + Convert.ToString(maxDepth) + Environment.NewLine;
 
 			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(ProcessedCellsA1.Count) + Environment.NewLine;
 
@@ -344,7 +365,7 @@ namespace Cube_flip
 
 		#region Algorithm2
 
-		private int GetHeuristicValueAlgorithm2(int startX, int startY, int finalX, int finalY, BoxSides currentStateSide)
+		private int GetHeuristicValueA2(int startX, int startY, int finalX, int finalY, BoxSides currentStateSide)
 		{
 			int requiredTurns = 0;
 
@@ -843,7 +864,7 @@ namespace Cube_flip
 			return requiredTurns;
 		}
 
-		private List<CellInf> MovesAlgorithm2(CellInf currentPosition)
+		private List<CellInf> CalcMovesA2(CellInf currentPosition)
 		{
 			List<CellInf> way = new List<CellInf>();
 
@@ -859,9 +880,11 @@ namespace Cube_flip
 					{
 						from = currentPosition
 					};
-					int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
+					int h = GetHeuristicValueA2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
 					temporaryWay.HeuristicValue = h;
 					temporaryWay.Depth = currentPosition.Depth + 1;
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+
 					way.Add(temporaryWay);
 				}
 
@@ -873,9 +896,11 @@ namespace Cube_flip
 					{
 						from = currentPosition
 					};
-					int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
+					int h = GetHeuristicValueA2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
 					temporaryWay.HeuristicValue = h;
 					temporaryWay.Depth = currentPosition.Depth + 1;
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+
 					way.Add(temporaryWay);
 				}
 
@@ -886,9 +911,11 @@ namespace Cube_flip
 					{
 						from = currentPosition
 					};
-					int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
+					int h = GetHeuristicValueA2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
 					temporaryWay.HeuristicValue = h;
 					temporaryWay.Depth = currentPosition.Depth + 1;
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+
 					way.Add(temporaryWay);
 				}
 
@@ -899,16 +926,18 @@ namespace Cube_flip
 					{
 						from = currentPosition
 					};
-					int h = GetHeuristicValueAlgorithm2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
+					int h = GetHeuristicValueA2(temporaryWay.GetX, temporaryWay.GetY, finalState.GetX, finalState.GetY, temporaryWay.GetSide);
 					temporaryWay.HeuristicValue = h;
 					temporaryWay.Depth = currentPosition.Depth + 1;
+					maxDepth = temporaryWay.Depth > maxDepth ? temporaryWay.Depth : maxDepth;
+
 					way.Add(temporaryWay);
 				}
 
 			return way;
 		}
 
-		public void FindingWayAlgorithm2()
+		public void FindingWayA2()
 		{
 			noExit = true;
 
@@ -930,7 +959,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (CellInf p in MovesAlgorithm2(temp))
+				foreach (CellInf p in CalcMovesA2(temp))
 					if (!O2.Contains(p) && !C2.Contains(p))
 						O2.Add(p);
 					else if (O2.Contains(p))
@@ -964,18 +993,19 @@ namespace Cube_flip
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		public string GetStatisticsAlgorithm2()
+		public string GetStatisticsA2()
 		{
 			string statistics = "";
+			maxDepth = 0;
 
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
-			FindingWayAlgorithm2();
+			FindingWayA2();
 			stopWatch.Stop();
 			statistics += "Время работы алгоритма: " + Convert.ToString(stopWatch.Elapsed) + Environment.NewLine;
 
 			Queue<int> pathPanel = GetWayPanel();
-			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + Environment.NewLine;
+			statistics += "Количество ходов: " + Convert.ToString((pathPanel.Count - 2) / 2) + "	Максимальная глубина: " + Convert.ToString(maxDepth) + Environment.NewLine;
 
 			statistics += "Количество перебранных вариантов (C): " + Convert.ToString(C2.Count) + Environment.NewLine;
 
@@ -984,7 +1014,7 @@ namespace Cube_flip
 			return statistics;
 		}
 
-		private void FindingMovesWayAlgorithm2()
+		private void FindingMovesWayA2()
 		{
 			noExit = true;
 
@@ -1020,7 +1050,7 @@ namespace Cube_flip
 					return;
 				}
 
-				foreach (CellInf p in MovesAlgorithm2(temp))
+				foreach (CellInf p in CalcMovesA2(temp))
 					if (!O2.Contains(p) && !C2.Contains(p))
 					{
 						O2.Add(p);
@@ -1118,15 +1148,15 @@ namespace Cube_flip
 			MessageBox.Show("К выбранной цели нет пути!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		public List<int[,]> GetMapMovesAlgorithm2()
+		public List<int[,]> GetMapMovesA2()
 		{
-			FindingMovesWayAlgorithm2();
+			FindingMovesWayA2();
 			return fieldMapMoves;
 		}
 
-		public List<int[,,]> GetMapMovesInformationAlgorithm2()
+		public List<int[,,]> GetMapMovesInformationA2()
 		{
-			FindingMovesWayAlgorithm2();
+			FindingMovesWayA2();
 			return listMovesInformation;
 		}
 
